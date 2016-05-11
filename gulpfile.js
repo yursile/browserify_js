@@ -42,7 +42,8 @@ gulp.task('css',function(){
 });
 
 gulp.task("reload",function(){
-   gulp.src(['./public/css/*.css','./public/index.html','./public/js/bundle.min.js']).pipe(connect.reload);
+   gulp.src(['./public/css/*.css','./public/index.html','./public/js/bundle.min.js'])
+   .pipe(connect.reload());
 });
 
 gulp.task('connect',function(){
@@ -89,7 +90,7 @@ gulp.task("cssmin",function(){
 });
 
 gulp.task("uglyfly",function(){
-  gulp.src(['./public/js/bundle.js','./public/js/bundle.min.js']).
+  gulp.src(['./public/js/bundle.js']).
   pipe(uglyfly()).
   pipe(rename({suffix: '.min'})).
   pipe(gulp.dest('./public/js'))
