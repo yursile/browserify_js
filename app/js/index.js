@@ -1,11 +1,21 @@
 var a = require('./a');
-var ad = require("ad-ydgf")
+var extend = require('js_extend');
 
 var Supportor = require("./supportor");
 
-$ = window.$;
-$("body").append("<div></div>")
-
 alert(Supportor.isAndroid);
+
+var obj = {
+	name:"kk",
+	wife:{
+		name:"krystal",
+		say:function(){
+			console.log("i love you")
+		}
+	}
+}
+
+var obj1 = extend(true,{name:"yursile",age:"20"},obj);
+console.log(obj1);
 
 a.test();
