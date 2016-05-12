@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "art-template": "^3.0.3",
+    "blueimp-md5": "^2.3.0",
     "browserify": "^13.0.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

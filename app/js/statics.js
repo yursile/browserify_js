@@ -1,5 +1,6 @@
+
 var $ = window.$;
-exports.Statistics = {
+var Statistics = {
     /**
      * @cfg {String} base
      * base url 
@@ -76,6 +77,7 @@ exports.Statistics = {
     /**
      * 委托事件发送统计请求 
      */
+
     addGlobalSupport: function() {
         var that = this;
         
@@ -93,5 +95,8 @@ exports.Statistics = {
             }
         }
     }
-    
+
+
 };
+
+module.exports = Statistics;

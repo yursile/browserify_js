@@ -1,12 +1,653 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+
+<script type="text/javascript">
+  var pvinsight_page_ancestors = '200390431;440007076;444725092';
+</script>
+
+<meta http-equiv=content-type content="text/html; charset=GBK">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>2016北京车展-搜狐汽车</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="keywords" content="搜狐汽车,汽车,汽车网站">
+<meta name="description" content="手机搜狐汽车为您提供最新汽车报价，汽车图片，汽车价格大全，最精彩的汽车资讯、行情、评测、导购内容，是提供信息最快最全的中国汽车网站。">
+<meta name="robots" content="all" />
+<link href="http://auto.sohu.com/upload/2016bjczyd0425/css.css" type="text/css" rel="stylesheet">
+
+<style>
+/** 引用广告样式 **/
+/* 浮层广告 */
+.index-win-money-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.index-win-money-img-inner {
+  display: table;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 99px 40px 0;
+  box-sizing: border-box;
+}
+.index-win-money-img-inner-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+.index-win-money-img-sub .index-win-money-img-inner {
+  padding-top: 51px;
+}
+.index-win-money-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 27px;
+  height: 27px;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-win-money-imgs.png") no-repeat;
+  background-size: 35px;
+  z-index: 99;
+}
+.index-win-money-time {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-win-money-imgs.png") no-repeat;
+  background-size: 35px;
+  -webkit-box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+}
+.index-win-money-img-close {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid #000;
+  height: 14px;
+  line-height: 14px;
+  top: -16px;
+  width: inherit;
+  padding: 0 5px;
+  font-size: 9px;
+  font-weight: normal;
+  font-family: helvetica, verdana, san-serif;
+  color: #333;
+  display: none;
+}
+.index-win-money-time-3 {
+  background-position: 0 -35px;
+}
+.index-win-money-time-2 {
+  background-position: 0 -70px;
+}
+.index-win-money-time-1 {
+  background-position: 0 -105px;
+}
+.index-win-money-time-0 {
+  display: none;
+}
+.index-win-money-img p {
+  position: relative;
+}
+.index-win-money-img img {
+  width: 100%;
+}
+.index-win-money-text {
+  display: none;
+  position: relative;
+  padding-right: 28px;
+  background-color: #FFFFFF;
+}
+.index-win-money-text a {
+  color: #AC6A00;
+  font-size: 14px;
+  padding: 3px 3px 3px 5px;
+  display: block;
+}
+/* 首页下拉广告 */
+.index-select-money img {
+  width: 100%;
+  vertical-align: bottom;
+}
+.index-select-money-text {
+  position: relative;
+  color: #ac6a00;
+  font-size: 14px;
+  padding-right: 50px;
+  background-color: #FFFFFF;
+}
+.index-select-money-text a {
+  color: #ac6a00;
+  display: block;
+  padding: 3px 3px 3px 5px;
+}
+.index-select-money-zoom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-select-money-imgs.png") no-repeat right 10px;
+  background-size: 19px;
+  background-position-x: 25px;
+  z-index: 99;
+}
+.index-select-money-text .index-select-money-zoom {
+  padding: 0;
+}
+.index-select-money-img {
+  display: none;
+  position: relative;
+}
+.index-select-money-showimg .index-select-money-zoom {
+  background-position-y: -17px;
+}
+.index-select-money-showimg .index-select-money-img {
+  display: block;
+}
+/* 微动摄影广告 */
+.videoRoot{
+    position: relative;
+} 
+.videoRoot i{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    margin: -31px 0 0 -27px;
+    width: 54px;
+    height: 63px;
+    background: url(http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/gif-play.png);
+    background-size: cover;    
+}
+.video_player .toResouse{
+    padding: 0 10px;
+    font-size: 14px;
+    color: #ffffff;
+}
+.video_player .toResouse a{
+    color: #ffffff;
+}
+.video_player .toResouse span{
+    float:right;
+}
+/* 图混广告 */
+.ptlist li{
+    position: relative;    
+}
+.ptlist li em{
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    font-size: 12px;
+    color: #ffffff;    
+}
+/* 通栏广告 */
+.full_banner{
+    margin: 0 0 10px;
+}
+/* 焦点图广告标示 */
+.focus-map-ad .focus a em{
+    position: absolute;
+    right: 5px;
+    top: 1px;
+    font-size: 12px;
+    color: #ffffff;    
+}
+</style>
 </head>
 <body>
-	<script type="text/javascript" src="http://apps.bdimg.com/libs/zepto/1.1.4/zepto.min.js"></script>
-	<script type="text/javascript" src="./js/bundle.js"> </script>
+<div id="fullscreenad" style="display:none"></div>
+<sohuadcode></sohuadcode>
+
+
+<header><h1>北京国际车展</h1>
+	<img src="http://i3.itc.cn/20160425/3251_df81f771_45a8_f871_dbf4_67d60bb75f60_1.JPG">
+   
+</header>
+
+<div class="focusbox1">
+<a href="javascript:void(0)" class="cover_l">看图片 </a>
+     <a href="javascript:void(0)" class="cover_r">看视频</a>
+  <div class="boxbg"><img src="http://auto.sohu.com/upload/2016bjczyd0420/img/app.png" width="750" ></div>
+ <div class="focus_main">
+     <div class="focus_l">
+     <a href="http://db.auto.sohu.com/epicm/bj2016/pic_car.sip?g=134151&p=4632782"><img src="http://i1.itc.cn/20160425/3251_e1461ff2_598d_c94a_bf59_708069aa8a09_1.JPG" width="289" height="318"><span class="t">奔驰E级实拍</span></a>
+     <a href="http://db.auto.sohu.com/epicm/bj2016/pic_car.sip?g=134190&p=4634474"><img src="http://i1.itc.cn/20160425/3251_147a1457_93bb_86f5_9f69_e55764a4ea0e_1.JPG" width="289" height="318"><span class="t">大众辉昂实拍</span></a>
+</div>
+     <div class="focus_m   z">
+    <div class="swiper-container" id="focus">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide"><div class="focus"><a href="http://auto.sohu.com/s2016/7076/s447423541/index.shtml"><img src="http://i3.itc.cn/20160504/3251_00799392_88d1_5388_5e16_9a2febc67b29_1.jpg"  width="578" height="318"><p>2016北京车展大奖正式揭晓</p></a></div></div>
+
+        <div class="swiper-slide"><div class="focus"><a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461563477879"><img src="http://i3.itc.cn/20160427/3251_688c054f_fc7b_7561_3181_2010a057d1e9_1.JPG" width="578" height="318"><p>[VR全景视频]给你不一样的车展报道</p></a></div></div>
+        <div class="swiper-slide"><div class="focus"><a href="http://auto.sohu.com/20160429/n446623527.shtml"><img src="http://i0.itc.cn/20160429/3251_40ef0a7a_b2a1_1e90_e889_43b4252da01c_1.JPG"  width="578" height="318"><p>细数北京车展最酷概念车</p></a></div></div>
+
+        <div class="swiper-slide focus-map-ad" id="beans_14279"><div class="focus">
+          <a href="http://auto.sohu.com/20160425/n445964593.shtml"><img src="http://i2.itc.cn/20160425/3251_810be313_0c1c_fefc_fcbe_2649b72a0c12_1.JPG" width="578" height="318"><p>搜狐汽车真人秀 灰姑娘的华丽蜕变</p></a></div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination" id="foctit"></div>
+    </div>
+    <div class="focus_r">
+<a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461664525377" class="m"><img  src="http://i1.itc.cn/20160427/3251_4df36cac_e3d4_8017_63de_5c36926e8192_1.JPG" width="360" height="318"><span class="t">[VR视频]看江淮IEV7</span></a>
+<a href="http://my.tv.sohu.com/pl/9123070/83674876.shtml"><img  src="http://i1.itc.cn/20160429/3251_8977fb80_f5e3_88bb_9649_dcacf7bbed01_1.JPG" width="218" height="159"><span class="t">四万看车展</span></a>
+<a href="http://my.tv.sohu.com/us/254235699/83655494.shtml"><img  src="http://i0.itc.cn/20160427/3251_62790162_1cbe_1409_9de6_66a6f17bd1e7_1.JPG" width="218" height="159"><span class="t">陈震点评E级</span></a></div>
+  </div>
+
+</div>
+<!---s 车展头条-->
+<section id="box">
+	<div class="listmain">
+    	<div class="l">
+	<header>
+        <h2>图片看展</h2>
+    </header>
+    
+        <ul class="ptlist2">
+        
+    <li> <a href="http://db.auto.sohu.com/epicm/bj2016/pic_car.sip?g=134403&p=4642321"><img src="http://i2.itc.cn/20160425/3251_116da3c4_e6d9_cf88_cac2_14d91f287b19_1.JPG" width="230" height="140"><span class="t">法拉利GTC4 Lusso</span></a></li>
+    <li> <a href="http://db.auto.sohu.com/epicm/bj2016/pic_car.sip?g=134425&p=4644577"><img src="http://i0.itc.cn/20160425/3251_90398fb7_a5f6_b84d_69eb_4dbea451333c_1.JPG" width="230" height="140"><span class="t">阿斯顿马丁DB11</span></a></li>
+    <li> <a href="http://db.auto.sohu.com/epicm/bj2016/pic_car.sip?g=134352&p=4640448"><img src="http://i3.itc.cn/20160425/3251_9e81ff6e_78cd_2396_0c17_039a6ed2adc4_1.JPG" width="230" height="140"><span class="t">丰田FCV</span></a></li>
+    <li> <a href="http://db.auto.sohu.com/epicm/bj2016/brand.sip?b=419"><img src="http://i1.itc.cn/20160425/3251_6a0e4383_2240_58c8_bc1d_afb62fba1ed5_1.JPG" width="230" height="140"><span class="t">阿尔特</span></a></li>
+    </ul>
+        </div>
+        <div class="m">
+        <header>
+        <h2>车展头条</h2>
+    </header>
+        <ul class="list14">
+          <li><a href="http://auto.sohu.com/s2016/7076/s447423541/index.shtml">14项大奖诞生 北京车展大奖正式揭晓</a></li>
+
+          <li><a href="http://auto.sohu.com/20160504/n447637593.shtml">王侠:本届车展催生“三化”融合</a></li>
+
+          <li><a href="http://auto.sohu.com/20160504/n447651868.shtml">唱响产业变革主旋律 北京车展闭幕</a></li>
+
+          <li><a href="http://vr.auto.sohu.com/vr-show/vr_list.html?app=1">[VR全景视频]零距离逛馆 不一样的车展</a></li>
+
+          <li><a href="http://auto.sohu.com/s2016/7076/s446382749/index.shtml">小狐狸带你逛车展 看首发新车看美女</a></li>
+
+
+
+          <li id="beans_14282"><a href="http://clk.optaim.com/event.ng/Type=click&FlightID=201604&TargetID=sohu&Values=5948f472,415a7c94,1b42b248,7e95d58d&AdID=9879958">品牌复兴之作 德国宝沃BX7</a></li>
+        </ul>
+        </div>
+        <div class="r">
+         <header>
+        <h2>视频看展</h2>
+    </header>
+        <ul class="ptlist2">
+ 
+    <li> <a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461644870145"><img src="http://i1.itc.cn/20160426/3251_9396c1ae_79a5_f28c_5173_96005e1097ce_1.JPG" width="230" height="140"><span class="t">[VR视频]玩虚拟驾驶</span></a></li>
+    <li> <a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461664624638"><img src="http://i3.itc.cn/20160426/3251_80245107_bc6b_e53a_cce0_b53fa7da888c_1.JPG" width="230" height="140"><span class="t">[VR视频]北汽电动跑车</span></a></li>
+    <li> <a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461637215354"><img src="http://i2.itc.cn/20160426/3251_d6582774_e741_e8a8_795a_7976bc4263f4_1.JPG" width="230" height="140"><span class="t">[[VR视频]美女走秀</span></a></li>
+    <li> <a href="http://vr.auto.sohu.com/vr-show/player_mobile.html?path=../video&url=1461569440063"><img src="http://i1.itc.cn/20160425/3251_14a2d88d_9920_5216_7372_aaaf293e2ea8_1.JPG" width="230" height="140"><span class="t">[VR视频]特斯拉Model S</span></a></li>
+    </ul>
+        </div>
+    </div>
+</section>
+<!---e 车展头条-->
+<!---s 热门新车-->
+<section>
+	<div class="tab" id="tab1"><div class="area"><a href="#" class="cur">热门新车</a><a href="#">图片解码</a></div></div>
+  <div class="swiper-container" id="swiper1">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+       	<ul class="ptlist">
+
+    <li> <a href="http://auto.sohu.com/20160426/n446161168.shtml"><img src="http://i3.itc.cn/20160426/3251_26399d64_ec44_8648_ce3d_a38145aa1961_1.JPG" width="172" height="120"><span class="t">大众全尺寸概念SUV亮相</span>
+    <p>该车将在5月20日上市，起售价为28.6万元起</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160426/n446217009.shtml"><img src="http://i2.itc.cn/20160426/3251_1c8b764e_10e1_fc8a_7123_9dfee093cff5_1.JPG" width="172" height="120"><span class="t">新款QX80国内首次亮相</span>
+    <p>该车将在2016年5月份正式在国内上市</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n446068625.shtml"><img src="http://i2.itc.cn/20160426/3251_17411f5e_91fd_5ac5_5608_4ab8b3b70ae9_1.JPG" width="172" height="120"><span class="t">本田全新中型SUV冠道发布</span>
+    <p>该车将与丰田汉兰达等主流中型SUV车型竞争</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160426/n446190539.shtml"><img src="http://i3.itc.cn/20160426/3251_e35ea36b_9910_ca39_68f4_f8823972d342_1.JPG" width="172" height="120"><span class="t">2016款DS 5LS 1.8T发布</span>
+    <p>新车疑似售价分别为20.58万元和24.68万</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n445960478.shtml"><img src="http://i2.itc.cn/20160425/3251_7340f34b_9f26_5a7f_2d70_bca0096c8c2c_1.JPG" width="172" height="120"><span class="t">丰田全新普锐斯国内首发</span>
+    <p>新款普锐斯的造型设计与现款有了极大的改变</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n445973241.shtml"><img src="http://i0.itc.cn/20160427/3251_2550a472_05a6_40b4_c5fc_4b611941ce01_1.JPG" width="172" height="120"><span class="t">新款红旗H7正式亮相</span>
+    <p>一汽红旗为带来了其新款红旗H7，新车命名为红旗H7蓝途</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n446072118.shtml"><img src="http://i3.itc.cn/20160429/3251_b6f5fb6d_a480_6cab_8507_194fe7c4c6ce_1.JPG" width="172" height="120"><span class="t">全新一代奔驰E级长轴首发</span>
+    <p>全新E级长轴距的推出给了宝马5系Li及奥迪A6L不小的压力</p></a></li>
+
+    <li id="beans_14285"> <a href="http://clk.optaim.com/event.ng/Type=click&FlightID=201604&TargetID=sohu&Values=3a555a6d,b13b88fa,13b2f387,dda5fd1a&AdID=10938656/"><img src="http://i1.itc.cn/20160425/3261_d3eadfd1_e4f8_392b_665f_7fe6525b3dfe_1.JPG" width="172" height="120"><span class="t">宝马 X1，M4 GTS首发</span>
+    <p>集聚驾趣，在此迸发</p></a></li>
+    </ul>
+        <a href="http://m.sohu.com/c/18865/?v=3" class="more">点击查看更多</a>
+      </div>
+      
+      <div class="swiper-slide">
+       	<ul class="ptlist">
+    <li> <a href="http://auto.sohu.com/20160426/n446288040.shtml"><img src="http://i1.itc.cn/20160427/3251_ead0e50c_58c2_323c_36eb_2761586ccc26_1.JPG" width="172" height="120"><span class="t">全新迈腾对比别克君越</span>
+    <p>可以说这两台车的消费群体定位已经产生了明显区别</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160426/n446259623.shtml"><img src="http://i0.itc.cn/20160427/3251_3ff84208_cd6d_b4fd_65dd_422a6ed468f7_1.JPG" width="172" height="120"><span class="t">马自达CX-4对比日产逍客</span>
+    <p>一汽马自达CX-4首发亮相，日产逍客在去年迎来了换代</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n446087146.shtml"><img src="http://i2.itc.cn/20160426/3251_6a6dc12e_30db_d64e_db51_dd197c1e3fdb_1.JPG" width="172" height="120"><span class="t">广汽本田全新中型SUV</span>
+    <p>在车展上出现的广汽本田冠道只展示了其外观设计</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n445921573.shtml"><img src="http://i3.itc.cn/20160425/3251_888e17a1_3160_0037_bdc0_d3601716016a_1.JPG" width="172" height="120"><span class="t">北京奔驰全新E级长轴距版</span>
+    <p>新车将有诸多专为中国消费者的用车习惯而打造的专属设计</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n445913758.shtml"><img src="http://i1.itc.cn/20160425/3251_d0f6e91b_9f7a_c8e6_1ca7_892314d3c092_1.JPG" width="172" height="120"><span class="t">奥迪新A4L解码</span>
+    <p>奥迪新A4L正式亮相，可能于6月份国内上市</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n446064885.shtml"><img src="http://i2.itc.cn/20160426/3251_7bbfb941_b70d_3ca6_10ce_fd8609be8816_1.JPG" width="172" height="120"><span class="t">国产自由侠解码</span>
+    <p>广汽菲克Jeep旗下第二款国产SUV车型自由侠正式亮相</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160426/n446294267.shtml"><img src="http://i2.itc.cn/20160427/3251_999bb844_099f_a105_9b6b_aa4b762ebcce_1.JPG" width="172" height="120"><span class="t">雷克萨斯LF-FC解码</span>
+    <p>雷克萨斯带来了全新概念旗舰轿车LF-FC，车展国内首发</p></a></li>
+
+    <li> <a href="http://auto.sohu.com/20160425/n446060661.shtml"><img src="http://i3.itc.cn/20160425/3251_f58724f8_40c3_c778_6ca3_51020a674a22_1.JPG" width="172" height="120"><span class="t">长安CS95解码</span>
+    <p>新车竞品车型将锁定哈弗H9等高端中国品牌SUV车型</p></a></li>
+    </ul>
+        <a href="http://m.sohu.com/c/18868/?v=3" class="more">点击查看更多</a>
+      </div>
+      
+    </div>
+  </div>
+</section>
+<!---e 热门新车-->
+
+<!---s 通栏广告-->
+
+<!---e 通栏广告-->
+
+<!---e 视频广告-->
+<section class="video_player">
+</section>
+<!---e 视频广告-->
+<!---s 手机展厅-->
+<section>
+    <header>
+        <h2>手机展厅</h2>
+    </header>
+    <div class="pt">
+    	<a href="http://db.auto.sohu.com/epicm/bj2016/halls.sip"><img src="http://i2.itc.cn/20160421/3261_fcc77834_6347_a4ce_f37e_19789000e3e1_1.jpg" width="240" height="160"><span class="t">观展必看:最详尽展馆布局</span>
+    <p>最便捷的场馆分布图，为您规划出最直接便捷的观展路线</p></a>
+    </div>
+
+    <nav><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=W1">W1</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=W2">W2</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=W3">W3</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=W4">W4</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=E1">E1</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=E2">E2</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=E3">E3</a><a href="http://db.auto.sohu.com/epicm/bj2016/bhall.sip?h=E4">E4</a></nav>
+
+    <div class="nexbox">
+    	<div class="swiper-container" id="swiper22">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+       	<div class="new">
+        	<div class="txt"><span class="tip">展馆新闻</span></div>
+           <a href="http://auto.sohu.com/20160329/n442571885.shtml"><strong>看展交通方式:地铁最靠谱</strong><p>知道了时间和地点，然后怎么去呢?</p></a>
+        </div>
+      </div>
+      
+      <div class="swiper-slide">
+       	<div class="new">
+        	<div class="txt"><span class="tip">展馆新闻</span></div>
+           <a href="http://auto.sohu.com/20160425/n446069569.shtml"><strong>车展重磅SUV汇总</strong><p>在本届北京车展上，共有70余款SUV悉数亮相</p></a>
+        </div>
+      </div>
+
+     <div class="swiper-slide">
+       	<div class="new">
+        	<div class="txt"><span class="tip">展馆新闻</span></div>
+           <a href="http://auto.sohu.com/20160426/n446088255.shtml"><strong>北京车展200余款新车汇总</strong><p>包括大众辉昂、奔驰E级长轴版等120款首发新车。</p></a>
+        </div>
+      </div>
+
+    <div class="swiper-slide">
+       	<div class="new">
+        	<div class="txt"><span class="tip">展馆新闻</span></div>
+           <a href="http://auto.sohu.com/20160425/n446069714.shtml"><strong>权志龙等助阵车展</strong><p>十余位当红明星站台，为各个展台赚足了人气。</p></a>
+        </div>
+      </div>
+      
+    </div>
+    </div>
+    </div>
+    
+</section>
+<!---e 手机展厅-->
+<!---s 通栏广告-->
+<section id="beans_14280">
+</section>
+<!---e 通栏广告-->
+<!---s 视频看展-->
+<section>
+  <header>
+        <h2>视频看展</h2>
+   </header>
+<ul class="ptlist2">
+        	<li> <a href="http://my.tv.sohu.com/us/254235699/83677599.shtml"><img src="http://i2.itc.cn/20160429/3261_19d989e8_8d58_a88b_782a_0f5267aaadfe_1.JPG" width="668" height="340"><span class="t">陈震深度点评北京BJ80</span></a></li>
+    <li> <a href="http://my.tv.sohu.com/pl/9123974/83668390.shtml"><img src="http://i3.itc.cn/20160429/3261_76da55ff_b864_ffc6_4d23_1ee837168455_1.JPG" width="324" height="180"><span class="t">奥迪销量王换代不可不看</span></a></li>
+     <li> <a href="http://my.tv.sohu.com/pl/9122822/83648024.shtml"><img src="http://i2.itc.cn/20160429/3261_57e7908d_02b8_5362_1c1a_93ed6642a0dc_1.JPG" width="324" height="180"><span class="t">爱极客报道 宾利添越</span></a></li>
+      <li> <a href="http://my.tv.sohu.com/us/237151098/83661839.shtml"><img src="http://i1.itc.cn/20160428/3261_a4357bb3_b6ca_bb17_8eab_53f7bebff03f_1.JPG" width="324" height="180"><span class="t">如何在车展要美女手机号</span></a></li>
+       <li> <a href="http://my.tv.sohu.com/us/261192290/83711979.shtml"><img src="http://i0.itc.cn/20160504/3261_02e6c882_ede4_269e_7e5d_4ee3280d6951_1.JPG" width="324" height="180"><span class="t">长安旗舰SUVCS95亮相</span></a></li>
+    </ul>
+    <a href="http://vr.auto.sohu.com/vr-show/vr_list.html?app=1" class="more">点击查看更多</a>
+</section>
+<!---e 视频看展-->
+<!---s 通栏广告-->
+
+<!---e 通栏广告-->
+<!---s 自媒体-->
+<section>
+  <header>
+        <h2>自媒体</h2>
+   </header>
+      <div  class=" focusbox3">
+        <div class="swiper-container" id="swiper3">
+          <div  class="swiper-wrapper">
+            <div class="swiper-slide"><ul class="ptlist3">
+        	<li> <a href="http://auto.sohu.com/20160415/n444294065.shtml"><img src="http://i2.itc.cn/20160421/3261_226de049_69cc_f556_f93c_7fda432a892f_1.jpg" width="140" height="180"><span class="t">“先锋实验”—MP大咖秀</span><p>自媒体演变到今天，大浪淘沙始见金。当遇上传统媒体“中央CPU”信息报道模式时如何分庭抗礼?</p></a></li>
+    <li> <a href="http://auto.sohu.com/20160425/n446062885.shtml"><img src="http://i3.itc.cn/20160429/3261_25cfa162_f875_dead_882c_7d1456fe66e7_1.jpg" width="140" height="180"><span class="t">亮相车展新能源车—车业杂谈</span><p>此次新能源参展的数量已有大幅提升</p></a></li>
+    <li> <a href="http://auto.sohu.com/20160505/n447699135.shtml"><img src="http://i0.itc.cn/20160505/3251_14614c1d_3f80_4e92_c130_22134c351f3f_1.jpg" width="140" height="180"><span class="t">围观北京车展的最新SUV-车域无疆</span><p>这次北京车展更是有一大批最新的SUV粉墨登场</p></a></li>
+
+    </ul></div>
+            <div class="swiper-slide"><ul class="ptlist3">
+        	<li> <a href="http://auto.sohu.com/20160428/n446677196.shtml"><img src="http://i0.itc.cn/20160429/3261_756391e2_b7c6_8164_ad16_7991a15062a3_1.jpg" width="140" height="180"><span class="t">自主品牌显进攻势—一品汽车</span><p>中国品牌汽车开始显露出更为积极的进击态势</p></a></li>
+    <li> <a href="http://auto.sohu.com/20160428/n446607654.shtml"><img src="http://i1.itc.cn/20160429/3261_3de701d6_8ff2_5578_9e34_af660a3c56b7_1.jpg" width="140" height="180"><span class="t">豪华品牌座次如何洗牌—驾仕派</span><p>中国豪华车市场整体同比增长11%，总规模达约191万台</p></a></li>
+     <li> <a href="http://auto.sohu.com/20160428/n446577224.shtml"><img src="http://i0.itc.cn/20160429/3261_e80459bc_23f1_b8b7_7697_69c3f8a19c98_1.jpg" width="140" height="180"><span class="t">从历史角度看车展—车轩辕</span><p>从1990年创办到2016年，北京车展走过了14届</p></a></li>
+
+    </ul></div>
+            <div class="swiper-slide"><ul class="ptlist3">
+        	<li> <a href="http://auto.sohu.com/20160428/n446596986.shtml"><img src="http://i2.itc.cn/20160429/3261_c0de7906_f36b_7539_34b7_4b322777bec8_1.jpg" width="140" height="180"><span class="t">不到30万买哪些豪华SUV—车图腾</span><p>不少豪华品牌为市场份额，旗下SUV售价变得亲民</p></a></li>
+    <li> <a href="http://auto.sohu.com/20160428/n446661724.shtml"><img src="http://i2.itc.cn/20160429/3261_d9437d7a_1947_9ee3_4917_5c6d606dfdad_1.jpg" width="140" height="180"><span class="t">概念车带你穿越未来—麻辣车事</span><p>跟随我脚步去看北京车展那些设计前卫概念车</p></a></li>
+     <li> <a href="http://auto.sohu.com/20160505/n447872956.shtml"><img src="http://i2.itc.cn/20160506/3251_ca73f309_6a57_d8b0_094c_8bd373711cc7_1.JPG" width="140" height="180"><span class="t">未来的宝马你会买吗—汽车商报</span><p>来围观一下宝马未来百年概念车的设计师们如何解读。</p></a></li>
+
+    </ul></div>
+           
+          </div>
+        </div>
+        <div class="pagination" id="foctit3">
+    </div>
+  
+</section>
+<!---e 自媒体-->
+<!---s 通栏广告-->
+<section id="beans_14281">
+</section>
+<!---e 通栏广告-->
+<!---s 美女看展-->
+<section>
+  <header>
+        <h2>美女看展</h2>
+   </header>
+  <ul class="ptlist4">
+     <li><div class="pbox"><a href="http://m.sohu.com/p/726658/"><img src="http://i3.itc.cn/20160424/3251_cbd0c310_f14f_adb2_ba25_2ad5ffcd4451_1.JPG" width="400" height="400"><span class="t">灰姑娘海滩比基尼狂野诱惑</span></a></div></li>
+    <li><div class="pbox"><a href="http://m.sohu.com/p/651526/"><img src="http://i3.itc.cn/20160421/3261_9720d2a2_98a3_d0f2_f31d_ffbfc39ad2e7_1.JPG" width="260" height="195"><span class="t">青涩妹妹水嫩可人</span></a></div></li>
+     <li><div class="pbox"><a href="http://m.sohu.com/p/651209/"><img src="http://i2.itc.cn/20160421/3261_5f8f18f4_bb65_085f_4521_d9f70e5b8ea1_1.JPG"  width="260" height="195"><span class="t">黑长裙性感五姐妹抢镜</span></a></div></li>
+
+    </ul>
+  
+</section>
+<!---e 美女看展-->
+<footer>
+<a href="http://m.sohu.com/c/1592/"><span>进入汽车频道</span></a>
+</footer>
+<script src="http://auto.sohu.com/upload/2016bjczyd0423-2/zepto.js"></script>
+<script type="text/javascript" src="http://auto.sohu.com/m/resources/mlayout/script/idangerous.swiper.min.js"></script> 
+<script charset="utf-8" src="./js/bundle.js"></script>
+<script type="text/javascript" >
+$(function(){
+
+	//s vr焦点图  
+	 var mySwiper0 = new Swiper('#focus',{
+		autoplay:3000,//自动播放
+		autoplayDisableOninteraction:false,
+		calculateHeight:true,//响应式布局
+		pagination: '#foctit',
+		loop:true,//循环播放
+		grabCursor: true,//光标在Swiper上时成手掌状
+		paginationClickable: true,
+        onSlideChangeStart: function(){
+            MSOHUAD.moneyExposureStatis.sendFirstScreenStatis();
+        }
+	})  
+	$('#focus').on('touchend', function(e){
+		mySwiper0.startAutoplay();
+	})
+
+	  $('.focpre').on('click', function(e){
+		e.preventDefault()
+		mySwiper.swipePrev()
+	  })
+	  $('.focnext').on('click', function(e){
+		e.preventDefault()
+		mySwiper.swipeNext()
+	  })
+		  
+     //e vr焦点图  
+	 
+	 //s 热门新车
+	  var tabsSwiper = new Swiper('#swiper1',{
+		speed:500,
+		onSlideChangeStart: function(){
+		  $("#tab1 .cur").removeClass('cur')
+		  $("#tab1 a").eq(tabsSwiper.activeIndex).addClass('cur')  
+		}
+	  })
+	  $("#tab1 a").on('touchstart mousedown',function(e){
+		e.preventDefault()
+		$("#tab1 .cur").removeClass('cur')
+		$(this).addClass('cur')
+		tabsSwiper.swipeTo( $(this).index() )
+	  })
+	  $("#tab1 a").click(function(e){
+		e.preventDefault()
+	  })
+	  
+	 //e 热门新车
+	  //s 自媒体
+	var mySwiper2 = new Swiper('#swiper3',{
+		autoplay:3000,//自动播放
+		autoplayDisableOninteraction:false,
+		calculateHeight:true,//响应式布局
+		pagination: '#foctit3',
+		loop:true,//循环播放
+		grabCursor: true,//光标在Swiper上时成手掌状
+		paginationClickable: true
+	})   
+	$('#swiper3').on('touchend', function(e){
+		mySwiper2.startAutoplay();
+	})
+	 //e 自媒体
+	 
+	 //s 相关新闻
+	var mySwiper3 = new Swiper('#swiper22',{
+		autoplay:3000,//自动播放
+		autoplayDisableOninteraction:false,
+		calculateHeight:true,//响应式布局
+		pagination: '',
+		loop:true,//循环播放
+		grabCursor: true,//光标在Swiper上时成手掌状
+		paginationClickable: true
+	}) 
+	 //e 相关新闻 
+	
+	  
+	$(".swiper-slide").show();
+	  
+	var l_btn=$(".cover_l");
+	var r_btn=$(".cover_r");
+	var l_txt=$(".cover_l").text();
+	var r_txt=$(".cover_r").text();
+	var main=$(".focus_main");
+	var listmain=$(".listmain");
+	var vrbox=$(".boxbg");
+	var flas=1; //左 中 右 分别为 0 1 2
+
+	l_btn.on(' mousedown',function(){
+		if(flas==1){
+			main.find(".z").removeClass("z"); 
+			main.animate({left:"89%"},500,"",function(){$(".focus_l").addClass("z");})
+			listmain.animate({left:"100%"},500,"",function(){})
+			l_btn.hide();
+			r_btn.show().text("回主屏");
+			flas=0;
+		}else{
+			main.find(".z").removeClass("z");
+			main.animate({left:"11%"},500,"",function(){$(".focus_m").addClass("z");});
+			listmain.animate({left:"0"},500,"",function(){})
+			r_btn.show().text(r_txt);
+			l_btn.text(l_txt)
+			flas=1;
+			
+		}
+		
+	})
+	r_btn.on('mousedown',function(){
+		if(flas==0){
+			main.find(".z").removeClass("z");
+			main.animate({left:"11%"},500,"",function(){$(".focus_m").addClass("z");});
+			listmain.animate({left:"0"},500,"",function(){})
+			l_btn.show().text(l_txt);
+			r_btn.text(r_txt);
+			flas=1;
+		}else{
+			main.find(".z").removeClass("z");
+			main.animate({left:"-67%"},500,"",function(){$(".focus_r").addClass("z");});
+			listmain.animate({left:"-100%"},500,"",function(){})
+			r_btn.hide();
+			l_btn.show().text("回主屏");
+			flas=2;
+			
+		}
+
+	})
+	
+	  
+	//add 
+	var navnum=0;
+	var navtab=$("#nav a");
+	var navlist=$(".tabbox .table");
+	navtab.eq(navnum).addClass("cur").siblings(".cur").removeClass("cur");
+	navlist.eq(navnum).addClass("cur").siblings(".cur").removeClass("cur");
+	
+	$("#nav a").on('mousedown',function(e){
+		e.preventDefault();
+		var index=$(this).index();
+		navtab.eq(index).addClass("cur").siblings(".cur").removeClass("cur");
+	   navlist.eq(index).addClass("cur").siblings(".cur").removeClass("cur");
+	})
+})
+
+</script>
 
 </body>
 </html>
