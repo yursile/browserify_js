@@ -17,6 +17,6 @@ var obj = {
 
 var obj1 = extend(true,{name:"yursile",age:"20"},obj);
 console.log(obj1);
-console.log("2")
+
 
 a.test();
