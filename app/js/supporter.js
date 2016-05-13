@@ -4,6 +4,7 @@
         android = userAgent.match(/(Android)[\s\/]*([\d\.]+)/i),
         ios = userAgent.match(/(iPad|iPhone|iPod)[\w\s]*;(?:[\w\s]+;)*[\w\s]+(?:iPad|iPhone|iPod)?\sOS\s([\d_\.]+)/i),
         wp = userAgent.match(/(Windows\s+Phone)(?:\sOS)?\s([\d\.]+)/i),
+        isSohu = userAgent.toLocaleLowerCase().indexOf("sohunews"),
         isWebkit = /WebKit\/[\d.]+/i.test(userAgent),
         isSafari = ios ? (navigator.standalone ? isWebkit : (/Safari/i.test(userAgent) && !/CriOS/i.test(userAgent) && !/MQQBrowser/i.test(userAgent))) : false,
         os = {};

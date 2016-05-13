@@ -3427,11 +3427,15 @@ var CookieUtil = require("./CookieUtil"),
 // 第三列是测试广告位id
 // 第四列是max_turn
 // 第五列是adps
+/**
+ * 1: 焦点图
+ * 8：通栏广告
+ * 3: 信息流
+ */
 
 var homeAdData = [
     [1, 14279, '12892', 3, '5760315'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12894', 2, '6400100'],  //美女看展板块上方通栏
-    [8, 14280, '12893', 2, '6400100'],  //视频看展板块上方通栏
 ];
 
 MSOHUAD.homeAdData = homeAdData;
@@ -3492,33 +3496,33 @@ function homeFocusMapAd() {
     if (items.length >= 3) {
 
         var focusMapAdParam = {
-                type: homeAdData[0][0],
-                formalApId: homeAdData[0][1],
-                testApId: homeAdData[0][2],
-                maxTurn: homeAdData[0][3],
-                adps: homeAdData[0][4],
-                adTemplate: adTemplate.focusMap,
-                adDomClassName: adDomClassName.focusMap,
-                homeSlide: MSOHUAD.homeSlide,
-                homeSlideParam: MSOHUAD.homeSlideParam,
-                successCallBack: function(){
-                    MSOHUAD.adData.homePageFocusMapAd.first = true;
+            type: homeAdData[0][0],
+            formalApId: homeAdData[0][1],
+            testApId: homeAdData[0][2],
+            maxTurn: homeAdData[0][3],
+            adps: homeAdData[0][4],
+            adTemplate: adTemplate.focusMap,
+            adDomClassName: adDomClassName.focusMap,
+            homeSlide: MSOHUAD.homeSlide,
+            homeSlideParam: MSOHUAD.homeSlideParam,
+            successCallBack: function(){
+                MSOHUAD.adData.homePageFocusMapAd.first = true;
 
-                    if (MSOHUAD.adData.homePageFocusMapAd.two) {
-                        // MSOHUAD.homeSlide = new Slide(MSOHUAD.homeSlideParam);
-                        // $('.tips .page-wrapper').css('visibility', 'visible');
-                    }
-
-                },
-                errorCallBack: function() {
-                    MSOHUAD.adData.homePageFocusMapAd.first = true;
-
-                    if (MSOHUAD.adData.homePageFocusMapAd.two) {
-                        // MSOHUAD.homeSlide = new Slide(MSOHUAD.homeSlideParam);
-                        // $('.tips .page-wrapper').css('visibility', 'visible');
-                    }
+                if (MSOHUAD.adData.homePageFocusMapAd.two) {
+                    // MSOHUAD.homeSlide = new Slide(MSOHUAD.homeSlideParam);
+                    // $('.tips .page-wrapper').css('visibility', 'visible');
                 }
-            };
+
+            },
+            errorCallBack: function() {
+                MSOHUAD.adData.homePageFocusMapAd.first = true;
+
+                if (MSOHUAD.adData.homePageFocusMapAd.two) {
+                    // MSOHUAD.homeSlide = new Slide(MSOHUAD.homeSlideParam);
+                    // $('.tips .page-wrapper').css('visibility', 'visible');
+                }
+            }
+        };
 
         renderCarAdAndSendStatis(focusMapAdParam);
 
@@ -3649,7 +3653,7 @@ function homeMilitaryTextAd() {
 function deliverySystemAd() {
     var i, len, adParam, template, className;
 
-    for ( i = 1; i < 3; i++ ) {
+    for ( i = 1; i < homeAdData.length; i++ ) {
 
         if ( homeAdData[i][4] === '6400100' ) {
             template = adTemplate.homeBannerImgAd;
