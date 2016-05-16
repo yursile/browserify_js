@@ -15,8 +15,9 @@ var CookieUtil = require("./CookieUtil"),
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
         // 判断是正式环境还是测试环境
-        var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('debug') > 0;
+        var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('public') > 0;
         return result;
+        // return true;
     })();
 
     // 用来判断是否发送统计的函数，应用于焦点图广告av统计的发送(元素曝光的情况下发送)
@@ -41,12 +42,14 @@ var CookieUtil = require("./CookieUtil"),
 /**
  * 1: 焦点图
  * 8：通栏广告
- * 3: 信息流
+ * 3: 信息流  文字
+ * 7：图文混排
  */
 
 var homeAdData = [
-    [1, 14279, '12892', 3, '5760315'],  // 车展首页焦点图第四帧广告
+    [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12894', 2, '6400100'],  //美女看展板块上方通栏
+    // ["", 12926, '12926', 1, '30000001']
 ];
 
 MSOHUAD.homeAdData = homeAdData;
@@ -61,7 +64,7 @@ if (!isNoADMSohu) {
 function init() {
 
     homeFocusMapAd();
-    infoFlowAdSend();
+    // infoFlowAdSend();
     // homeTopBannerAd();
     //homeBottomBannerAd();
 
@@ -70,6 +73,9 @@ function init() {
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
+
+    //下拉
+    // MONEY.indexSelect();
 
     // gif广告
     // MONEY.gif();

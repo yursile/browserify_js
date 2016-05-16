@@ -5,7 +5,7 @@
         testBaseAdQuestUrl = 'http://10.16.10.63/adgtr/?',
         isTestEnvironment = (function() {
             // 判断是正式环境还是测试环境
-            var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('debug') > 0;
+            var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
             return result;
         })();
 

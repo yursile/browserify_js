@@ -1696,10 +1696,14 @@ var Statistics = require("./statics"),
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14283", "12896", "4800640"],  //浮层广告
-        ["", "14284", "12897", "6400320"],  //下拉广告
+        ["", "14283", "12924", "4800640"],  //浮层广告
+        ["", "14284", "12925", "6400320"],  //下拉广告
+        // ["", "14284", "12921", "6400320"],  //焦点
+        // ["", "14284", "12922", "6400320"],  //通栏
+        // ["", "14284", "12923", "6400320"],  //信息流
         ["", "14288", "12901", "6400320"], //多图广告，H5广告
-        ["", "14287", "12900", "30000001"], //视频广告
+        // ["", "14287", "12900", "30000001"], //视频广告
+        ["", "12926", "12926", "30000001"],
         ["", "14286", "12899", "30000001"]  //gif广告
     ];
 
@@ -1722,7 +1726,7 @@ var Statistics = require("./statics"),
     var isTestEnvironment = function() {
         // 判断是正式环境还是测试环境
         var hostName = window.location.hostname;
-        var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('debug') > 0;
+        var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
         return result;
     };
 
@@ -2235,7 +2239,7 @@ var Statistics = require("./statics"),
         indexSelect: function() {
             baseAdParam = carExhAdData[1];
 
-            var textNeighbor = document.querySelector('header');
+            var textNeighbor = document.querySelector('#beans_'+baseAdParam[2]);
 
             // if(!baseAdParam[1] || !textNeighbor) {
             //     return;
@@ -2244,6 +2248,8 @@ var Statistics = require("./statics"),
             var turn = getTurnNum(2, 'indexSelect');
             var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
 
+            var a = isFirstShowToday('indexSelect_' + itemspaceid, true);
+            console.log(a);
             if (isFirstShowToday('indexSelect_' + itemspaceid, true)) {
                 return;
             }
@@ -2331,7 +2337,7 @@ var Statistics = require("./statics"),
                     if ( $("#scroller").length !== 0 ) {
                         $("#pullDown").after( root );
                     } else {
-                        textNeighbor.parentNode.insertBefore(root, textNeighbor);
+                        textNeighbor.appendChild(root);
                     }
 
                     countdown();
@@ -2987,7 +2993,7 @@ var Statistics = require("./statics"),
         testBaseAdQuestUrl = 'http://10.16.10.63/adgtr/?',
         isTestEnvironment = (function() {
             // 判断是正式环境还是测试环境
-            var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('debug') > 0;
+            var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
             return result;
         })();
 
@@ -3404,8 +3410,9 @@ var CookieUtil = require("./CookieUtil"),
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
         // 判断是正式环境还是测试环境
-        var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('debug') > 0;
+        var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('public') > 0;
         return result;
+        // return true;
     })();
 
     // 用来判断是否发送统计的函数，应用于焦点图广告av统计的发送(元素曝光的情况下发送)
@@ -3430,12 +3437,14 @@ var CookieUtil = require("./CookieUtil"),
 /**
  * 1: 焦点图
  * 8：通栏广告
- * 3: 信息流
+ * 3: 信息流  文字
+ * 7：图文混排
  */
 
 var homeAdData = [
-    [1, 14279, '12892', 3, '5760315'],  // 车展首页焦点图第四帧广告
+    [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12894', 2, '6400100'],  //美女看展板块上方通栏
+    // ["", 12926, '12926', 1, '30000001']
 ];
 
 MSOHUAD.homeAdData = homeAdData;
@@ -3450,7 +3459,7 @@ if (!isNoADMSohu) {
 function init() {
 
     homeFocusMapAd();
-    infoFlowAdSend();
+    // infoFlowAdSend();
     // homeTopBannerAd();
     //homeBottomBannerAd();
 
@@ -3459,6 +3468,9 @@ function init() {
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
+
+    //下拉
+    // MONEY.indexSelect();
 
     // gif广告
     // MONEY.gif();
@@ -4666,6 +4678,7 @@ module.exports = Statistics;
         android = userAgent.match(/(Android)[\s\/]*([\d\.]+)/i),
         ios = userAgent.match(/(iPad|iPhone|iPod)[\w\s]*;(?:[\w\s]+;)*[\w\s]+(?:iPad|iPhone|iPod)?\sOS\s([\d_\.]+)/i),
         wp = userAgent.match(/(Windows\s+Phone)(?:\sOS)?\s([\d\.]+)/i),
+        isSohu = userAgent.toLocaleLowerCase().indexOf("sohunews"),
         isWebkit = /WebKit\/[\d.]+/i.test(userAgent),
         isSafari = ios ? (navigator.standalone ? isWebkit : (/Safari/i.test(userAgent) && !/CriOS/i.test(userAgent) && !/MQQBrowser/i.test(userAgent))) : false,
         os = {};

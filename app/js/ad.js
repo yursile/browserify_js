@@ -15,10 +15,14 @@
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14283", "12896", "4800640"],  //浮层广告
-        ["", "14284", "12897", "6400320"],  //下拉广告
+        ["", "14283", "12924", "4800640"],  //浮层广告
+        ["", "14284", "12925", "6400320"],  //下拉广告
+        // ["", "14284", "12921", "6400320"],  //焦点
+        // ["", "14284", "12922", "6400320"],  //通栏
+        // ["", "14284", "12923", "6400320"],  //信息流
         ["", "14288", "12901", "6400320"], //多图广告，H5广告
-        ["", "14287", "12900", "30000001"], //视频广告
+        // ["", "14287", "12900", "30000001"], //视频广告
+        ["", "12926", "12926", "30000001"],
         ["", "14286", "12899", "30000001"]  //gif广告
     ];
 
@@ -41,7 +45,7 @@
     var isTestEnvironment = function() {
         // 判断是正式环境还是测试环境
         var hostName = window.location.hostname;
-        var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('debug') > 0;
+        var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
         return result;
     };
 
@@ -554,7 +558,7 @@
         indexSelect: function() {
             baseAdParam = carExhAdData[1];
 
-            var textNeighbor = document.querySelector('header');
+            var textNeighbor = document.querySelector('#beans_'+baseAdParam[2]);
 
             // if(!baseAdParam[1] || !textNeighbor) {
             //     return;
@@ -563,6 +567,8 @@
             var turn = getTurnNum(2, 'indexSelect');
             var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
 
+            var a = isFirstShowToday('indexSelect_' + itemspaceid, true);
+            console.log(a);
             if (isFirstShowToday('indexSelect_' + itemspaceid, true)) {
                 return;
             }
@@ -650,7 +656,7 @@
                     if ( $("#scroller").length !== 0 ) {
                         $("#pullDown").after( root );
                     } else {
-                        textNeighbor.parentNode.insertBefore(root, textNeighbor);
+                        textNeighbor.appendChild(root);
                     }
 
                     countdown();
