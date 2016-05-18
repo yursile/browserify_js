@@ -3898,7 +3898,7 @@ function renderCarAdAndSendStatis(opts) {
                     for(var i=0; i<=focusMapAdElems.length; i++){
                         if(focusMapAdElems[i]){
                             var focusMapAdMark = document.createElement('em');
-                            focusMapAdMark.innerHTML = '广告';
+                            focusMapAdMark.innerHTML = '广告告';
                             focusMapAdElems[i].querySelector(".focus a").setAttribute("href", "javascript:;");
                             focusMapAdElems[i].querySelector(".focus a").setAttribute("data-url", adInfo.data.url);
                             focusMapAdElems[i].querySelector(".focus a img").setAttribute("src", adInfo.data.image);
