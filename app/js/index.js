@@ -46,6 +46,7 @@ var CookieUtil = require("./CookieUtil"),
  * 7：图文混排
  */
 
+
 var homeAdData = [
     [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
@@ -102,6 +103,7 @@ function init() {
     //             });
 
 
+    //通栏广告
     deliverySystemAd();
 
 }

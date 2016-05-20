@@ -1914,6 +1914,8 @@ var Statistics = require("./statics"),
     };
 
     var isFirstShowToday = function (type, isGet) {
+        //if just get  
+        //don not excute set.
         if (isGet) return CookieUtil.get(type);
 
         var nowTime = new Date();
@@ -2060,8 +2062,12 @@ var Statistics = require("./statics"),
             var turn = getTurnNum(2, 'indexWin');
             var self = this;
             var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
-
+            var indexWinNode = document.querySelector("#beans_"+itemspaceid);
+            //第一次为null
+            //第二次展示下拉广告
             if (isFirstShowToday('indexWin_' + itemspaceid, true)) {
+                
+                indexWinNode.parentNode.removeChild(indexWinNode);
                 this.indexSelect();
                 return;
             }
@@ -2070,6 +2076,10 @@ var Statistics = require("./statics"),
                 url: getAdRequestBaseUrl(baseAdParam) + '&turn=' + turn,
                 time : timeout,
                 success : function(data) {
+                    /**
+                     * if indexwin no ad,
+                     * show indexSelect ad
+                     */
                     data = data[0];
                     if (!data || !data.resource || !data.resource1) {
                         sendStatisCodeAlways({
@@ -2077,6 +2087,7 @@ var Statistics = require("./statics"),
                             // newschn : newschn,
                             // subchannelid : subchannelid
                         });
+                         indexWinNode.parentNode.removeChild(indexWinNode);
                         self.indexSelect();
                         return;
                     }
@@ -2248,9 +2259,10 @@ var Statistics = require("./statics"),
             var turn = getTurnNum(2, 'indexSelect');
             var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
 
-            var a = isFirstShowToday('indexSelect_' + itemspaceid, true);
-            console.log(a);
+            var indexSelectNode = document.querySelector("#beans_"+itemspaceid);
             if (isFirstShowToday('indexSelect_' + itemspaceid, true)) {
+                // console.log()
+                indexSelectNode.parentNode.removeChild(indexSelectNode);
                 return;
             }
 
@@ -2260,6 +2272,7 @@ var Statistics = require("./statics"),
                 success : function(data) {
                     data = data[0];
                     if (!data || !data.resource || !data.resource1) {
+                        indexSelectNode.parentNode.removeChild(indexSelectNode);
                         sendStatisCodeAlways({itemspaceid: itemspaceid});
                         return;
                     }
@@ -3441,6 +3454,7 @@ var CookieUtil = require("./CookieUtil"),
  * 7：图文混排
  */
 
+
 var homeAdData = [
     [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
@@ -3497,6 +3511,7 @@ function init() {
     //             });
 
 
+    //通栏广告
     deliverySystemAd();
 
 }
