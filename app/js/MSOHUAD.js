@@ -4,7 +4,7 @@
 
 var Statistics = require("./statics"),
 	template = require("art-template"),
-	ExposureStatis = require("./exposure"),
+	// ExposureStatis = require("./exposure"),
 	NewExposureStatis = require("./newexposure"),
 	Jsonp =require("./jsonp"),
 	ADUtils = require("./ADUtils"),
@@ -1486,7 +1486,7 @@ var Statistics = require("./statics"),
 	MSOHUAD.adTemplate = adTemplate;
 	MSOHUAD.Utils = Utils;
 	MSOHUAD.adDomClassName = adDomClassName;
-
+	MSOHUAD.setFocusMapPicsPosition = setFocusMapPicsPosition;
 	module.exports = window.MSOHUAD =  MSOHUAD;
 
 	//TODO 暂时这样写，兼容频道页的代码

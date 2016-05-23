@@ -181,13 +181,113 @@ var CookieUtil = {
 module.exports = CookieUtil;
 
 },{}],3:[function(require,module,exports){
+(function(a) {
+	var b = /Android/i.test(a.navigator.userAgent),
+		c = document.createElement("div").style,
+		d = function() {
+			for (var a, b = "t,webkitT,MozT,msT,OT".split(","), d = 0, e = b.length; e > d; d++) if (a = b[d] + "ransform", a in c) return b[d].substr(0, b[d].length - 1);
+			return !1
+		}(),
+		e = function() {
+			return "webkit" == d || "O" === d ? d.toLowerCase() + "TransitionEnd" : "transitionend"
+		}(),
+		f = function(a, b, c) {
+			var d = this,
+				f = function() {
+					a.transitionTimer && clearTimeout(a.transitionTimer), a.transitionTimer = null, a.removeEventListener(e, g, !1)
+				},
+				g = function() {
+					f(), c && c.call(d)
+				};
+			f(), a.addEventListener(e, g, !1), a.transitionTimer = setTimeout(g, b + 100)
+		},
+		g = function(a, b) {
+			return function() {
+				return a.apply(b, arguments)
+			}
+		},
+		h = function(c) {
+			c = c || {};
+			for (var d in c) this[d] = c[d];
+			this.ct = document.body, this._onScroll_ = g(this._onScroll, this), a.addEventListener("scroll", this._onScroll_, !1), this.maxScrollY = 0, b && (this.useFade = !1), this.elements = [], this.lazyElements = {}, this.scan(this.ct), this._onPageShow_ = g(this._onPageShow, this), a.addEventListener("pageshow", this._onPageShow_, !1)
+		};
+	h.prototype = {
+		range: 200,
+		realSrcAttribute: "data-src",
+		useFade: !0,
+		_onPageShow: function(a) {
+			a.persisted && (this.maxScrollY = 0, this.scan(this.ct))
+		},
+		_onScroll: function() {
+			var a = this.getScrollY();
+			a > this.maxScrollY && (this.maxScrollY = a, this._scrollAction())
+		},
+		getScrollY: function() {
+			return a.pageYOffset || a.scrollY
+		},
+		_scrollAction: function() {
+			clearTimeout(this.lazyLoadTimeout), this.elements = this.elements.filter(function(b) {
+				if (this.range + a.innerHeight >= b.getBoundingClientRect().top - document.documentElement.clientTop) {
+					var c = b.getAttribute(this.realSrcAttribute);
+					return c && (this.lazyElements[c] ? this.lazyElements[c].push(b) : this.lazyElements[c] = [b]), !1
+				}
+				return !0
+			}, this), this.lazyLoadTimeout = setTimeout(g(this._loadImage, this), b ? 500 : 0)
+		},
+		_loadImage: function() {
+			var a, b, c;
+			for (b in this.lazyElements) c = this.lazyElements[b], a = c.shift(), 0 === c.length && delete this.lazyElements[b], a.addEventListener("load", g(this._onImageLoad, this), !1), a.addEventListener("error", g(this._onImageError, this), !1), a.src != b ? this._setImageSrc(a, b) : this._onImageLoad(a)
+		},
+		_onImageLoad: function(a) {
+			var b = this,
+				c = a.target || a,
+				d = c.getAttribute(b.realSrcAttribute),
+				e = b.lazyElements[d];
+			b._showImage(c), this.successCallBack && this.successCallBack(a), e && (e.forEach(function(a) {
+				b._setImageSrc(a, d), b._showImage(a)
+			}), delete b.lazyElements[d])
+		},
+		_onImageError: function(a) {
+			this.errorCallBack && this.errorCallBack(a)
+		},
+		_setImageSrc: function(a, b) {
+			this.useFade && (a.style.opacity = "0"), a.src = b
+		},
+		_showImage: function(a) {
+			var b = this,
+				c = function() {
+					a.setAttribute("data-lazy-load-completed", "1"), b.onImageLoad && b.onImageLoad(a)
+				};
+			b.useFade ? (a.style[d + "Transition"] = "opacity 200ms", a.style.opacity = 1, f(a, 200, c)) : c()
+		},
+		scan: function(a) {
+			var b;
+			a = a || document.body, b = a.querySelectorAll("img[" + this.realSrcAttribute + "]") || [], b = Array.prototype.slice.call(b, 0), b = b.filter(function(a) {
+				return -1 == this.elements.indexOf(a) && "1" != a.getAttribute("data-lazy-load-completed")
+			}, this), this.elements = this.elements.concat(b), this._scrollAction()
+		},
+		destroy: function() {
+			this.destroyed || (this.destroyed = !0, a.removeEventListener("scroll", this._onScroll_, !1), a.removeEventListener("pageshow", this._onPageShow_, !1), this.elements = this.lazyElements = null)
+		}
+	}, c = null, a.ImageLazyLoader = h;
+
+	if( typeof define === 'function' && (define.amd || seajs) ){
+        define('ImageLazyLoader', [], function(){
+            return ImageLazyLoader;
+        });
+    }else if ( typeof module !== 'undefined' && module.exports ) {
+        module.exports = ImageLazyLoader;
+    }
+    
+})(window);
+},{}],4:[function(require,module,exports){
 /**
  * MSOHUAD
  */
 
 var Statistics = require("./statics"),
 	template = require("art-template"),
-	ExposureStatis = require("./exposure"),
+	// ExposureStatis = require("./exposure"),
 	NewExposureStatis = require("./newexposure"),
 	Jsonp =require("./jsonp"),
 	ADUtils = require("./ADUtils"),
@@ -1669,7 +1769,7 @@ var Statistics = require("./statics"),
 	MSOHUAD.adTemplate = adTemplate;
 	MSOHUAD.Utils = Utils;
 	MSOHUAD.adDomClassName = adDomClassName;
-
+	MSOHUAD.setFocusMapPicsPosition = setFocusMapPicsPosition;
 	module.exports = window.MSOHUAD =  MSOHUAD;
 
 	//TODO 暂时这样写，兼容频道页的代码
@@ -1678,7 +1778,200 @@ var Statistics = require("./statics"),
 	window.renderAdAndSendStatis = renderAdAndSendStatis;
 	window.adTemplate = adTemplate;
 	window.adDomClassName = adDomClassName;
-},{"./ADUtils":1,"./CookieUtil":2,"./exposure":6,"./jsonp":8,"./newexposure":9,"./statics":10,"art-template":14}],4:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./jsonp":9,"./newexposure":10,"./statics":11,"art-template":15}],5:[function(require,module,exports){
+(function(a) {
+	var b = a.navigator,
+		c = /Android/i.test(b.userAgent),
+		d = b.msPointerEnabled,
+		e = {
+			start: d ? "MSPointerDown" : "touchstart",
+			move: d ? "MSPointerMove" : "touchmove",
+			end: d ? "MSPointerUp" : "touchend"
+		},
+		f = Array.prototype.slice,
+		g = document.createElement("div").style,
+		h = function() {
+			for (var a, b = "t,webkitT,MozT,msT,OT".split(","), c = 0, d = b.length; d > c; c++) if (a = b[c] + "ransform", a in g) return b[c].substr(0, b[c].length - 1);
+			return !1
+		}(),
+		i = h ? "-" + h.toLowerCase() + "-" : "",
+		j = function(a) {
+			return "" === h ? a : (a = a.charAt(0).toUpperCase() + a.substr(1), h + a)
+		},
+		k = j("transform"),
+		l = j("transitionDuration"),
+		m = function() {
+			return "webkit" == h || "O" === h ? h.toLowerCase() + "TransitionEnd" : "transitionend"
+		}(),
+		n = function() {},
+		o = function(a, b) {
+			var c, d, e, f;
+			if (c = (b || "").match(/\S+/g) || [], d = 1 === a.nodeType && (a.className ? (" " + a.className + " ").replace(/[\t\r\n]/g, " ") : " ")) {
+				for (f = 0; e = c[f++];) d.indexOf(" " + e + " ") < 0 && (d += e + " ");
+				a.className = d.trim()
+			}
+		},
+		p = function(a, b) {
+			var c, d, e, f;
+			if (c = (b || "").match(/\S+/g) || [], d = 1 === a.nodeType && (a.className ? (" " + a.className + " ").replace(/[\t\r\n]/g, " ") : " ")) {
+				for (f = 0; e = c[f++];) for (; d.indexOf(" " + e + " ") >= 0;) d = d.replace(" " + e + " ", " ");
+				a.className = d.trim()
+			}
+		},
+		q = function(a, b, c) {
+			var d = this,
+				e = function() {
+					a.transitionTimer && clearTimeout(a.transitionTimer), a.transitionTimer = null, a.removeEventListener(m, f, !1)
+				},
+				f = function() {
+					e(), c && c.call(d)
+				};
+			e(), a.addEventListener(m, f, !1), a.transitionTimer = setTimeout(f, b + 100)
+		},
+		r = function(a) {
+			a = a || {};
+			for (var b in a) this[b] = a[b];
+			this.el = "string" == typeof this.targetSelector ? document.querySelector(this.targetSelector) : this.targetSelector, d && (this.el.style.msTouchAction = "pan-y"), this.el.style.overflow = "hidden", this.wrap = this.wrapSelector ? this.el.querySelector(this.wrapSelector) : this.el.children[0], this.wrap.style.cssText = i + "transform:translate3d(" + -this.getItemWidth() * this.activeIndex + "px,0px,0px);" + i + "transition:" + i + "transform 0ms;", this.items = f.call(this.wrap.children, 0), this.prevSelector && (this.prevEl = "string" == typeof this.prevSelector ? document.querySelector(this.prevSelector) : this.prevSelector, this.prevEl.addEventListener("click", this, !1)), this.nextSelector && (this.nextEl = "string" == typeof this.nextSelector ? document.querySelector(this.nextSelector) : this.nextSelector, this.nextEl.addEventListener("click", this, !1)), this.indicatorSelector && (this.indicators = "string" == typeof this.indicatorSelector ? document.querySelectorAll(this.indicatorSelector) : this.indicatorSelector, this.indicators = f.call(this.indicators, 0)), this.el.addEventListener(e.start, this, !1), this.to(this.activeIndex, !0), this.running = !1, this.autoPlay && this.start()
+		};
+	r.prototype = {
+		activeIndex: 0,
+		autoPlay: !0,
+		interval: 3e3,
+		duration: 300,
+		beforeSlide: n,
+		onSlide: n,
+		getItemWidth: function() {
+			return this.wrap.offsetWidth
+		},
+		getLastIndex: function() {
+			return this.items.length - 1
+		},
+		getContext: function(a) {
+			var b, c, d = this.getLastIndex();
+			return "undefined" == typeof a && (a = this.activeIndex), b = a - 1, c = a + 1, 0 > b && (b = d), c > d && (c = 0), {
+				prev: b,
+				next: c,
+				active: a
+			}
+		},
+		start: function() {
+			this.running || (this.running = !0, this.clear(), this.run())
+		},
+		stop: function() {
+			this.running = !1, this.clear()
+		},
+		clear: function() {
+			clearTimeout(this.slideTimer), this.slideTimer = null
+		},
+		run: function() {
+			var a = this;
+			a.slideTimer || (a.slideTimer = setInterval(function() {
+				a.to(a.getContext().next)
+			}, a.interval))
+		},
+		prev: function() {
+			this.to(this.activeIndex - 1)
+		},
+		next: function() {
+			this.to(this.activeIndex + 1)
+		},
+		onPrevClick: function(a) {
+			a && a.preventDefault(), this.clear(), this.prev(), this.autoPlay && this.run()
+		},
+		onNextClick: function(a) {
+			a && a.preventDefault(), this.clear(), this.next(), this.autoPlay && this.run()
+		},
+		to: function(a, b) {
+			var c = this.activeIndex,
+				d = this.getLastIndex();
+			a >= 0 && d >= a && a != c && this.beforeSlide(a) !== !1 ? this.slide(a, b) : this.slide(c, b)
+		},
+		slide: function(a, b) {
+			var c = this,
+				d = c.activeIndex,
+				e = d,
+				f = function() {
+					c.wrap.removeEventListener(m, f, !1), c.wrap.style[l] = "0ms", c.indicators && c.indicatorCls && (c.indicators[e] && p(c.indicators[e], c.indicatorCls), c.indicators[c.activeIndex] && o(c.indicators[c.activeIndex], c.indicatorCls)), c.onSlide(c.activeIndex)
+				};
+			c.activeIndex = a, b || q(c.wrap, c.duration, f), c.wrap.style[l] = b ? "0ms" : c.duration + "ms", c.wrap.style[k] = "translate3d(" + -c.getItemWidth() * a + "px, 0px, 0px)", b && f()
+		},
+		onTouchStart: function(a) {
+			var b = this;
+			if (!(b.prevEl && b.prevEl.contains && b.prevEl.contains(a.target) || b.nextEl && b.nextEl.contains && b.nextEl.contains(a.target))) {
+				clearTimeout(b.androidTouchMoveTimeout), b.clear(), c && (b.androidTouchMoveTimeout = setTimeout(function() {
+					b.resetStatus()
+				}, 3e3)), b.el.removeEventListener(e.move, b, !1), b.el.removeEventListener(e.end, b, !1), b.el.addEventListener(e.move, b, !1), b.el.addEventListener(e.end, b, !1), delete b.horizontal;
+				var f = d ? a.clientX : a.touches[0].clientX,
+					g = d ? a.clientY : a.touches[0].clientY;
+				b.touchCoords = {}, b.touchCoords.startX = f, b.touchCoords.startY = g, b.touchCoords.timeStamp = a.timeStamp
+			}
+		},
+		onTouchMove: function(a) {
+			var b = this;
+			if (clearTimeout(b.touchMoveTimeout), d && (b.touchMoveTimeout = setTimeout(function() {
+				b.resetStatus()
+			}, 3e3)), b.touchCoords) {
+				b.touchCoords.stopX = d ? a.clientX : a.touches[0].clientX, b.touchCoords.stopY = d ? a.clientY : a.touches[0].clientY;
+				var c = b.touchCoords.startX - b.touchCoords.stopX,
+					e = Math.abs(c),
+					f = Math.abs(b.touchCoords.startY - b.touchCoords.stopY);
+				if ("undefined" != typeof b.horizontal) 0 !== c && a.preventDefault();
+				else {
+					if (!(e > f)) return delete b.touchCoords, void(b.horizontal = !1);
+					b.horizontal = !0, 0 !== c && a.preventDefault(), b.iscroll && b.iscroll.enabled && b.iscroll.disable(), clearTimeout(b.androidTouchMoveTimeout)
+				}
+				var g = b.getItemWidth(),
+					h = b.activeIndex * g,
+					i = b.activeIndex,
+					j = b.getLastIndex();
+				h += 0 === i && 0 > c || i == j && c > 0 ? Math.ceil(c / Math.log(Math.abs(c))) : c, g > e && (b.wrap.style[k] = "translate3d(" + -h + "px, 0px, 0px)")
+			}
+		},
+		onTouchEnd: function(a) {
+			if (clearTimeout(this.androidTouchMoveTimeout), clearTimeout(this.touchMoveTimeout), this.el.removeEventListener(e.move, this, !1), this.el.removeEventListener(e.end, this, !1), this.touchCoords) {
+				var b, c = this.getItemWidth(),
+					d = Math.abs(this.touchCoords.startX - this.touchCoords.stopX),
+					f = this.activeIndex;
+				isNaN(d) || 0 === d || (d > c && (d = c), b = d >= 80 || a.timeStamp - this.touchCoords.timeStamp < 200 ? this.touchCoords.startX > this.touchCoords.stopX ? f + 1 : f - 1 : f, this.to(b), delete this.touchCoords)
+			}
+			this.resetStatus()
+		},
+		resetStatus: function() {
+			this.iscroll && this.iscroll.enable(), this.autoPlay && this.run()
+		},
+		refresh: function() {
+			var a = this.getLastIndex();
+			this.items = f.call(this.wrap.children, 0), this.activeIndex > a && this.to(a, !0)
+		},
+		handleEvent: function(a) {
+			switch (a.type) {
+			case e.start:
+				this.onTouchStart(a);
+				break;
+			case e.move:
+				this.onTouchMove(a);
+				break;
+			case e.end:
+				this.onTouchEnd(a);
+				break;
+			case "click":
+				a.currentTarget == this.prevEl ? this.onPrevClick(a) : a.currentTarget == this.nextEl && this.onNextClick(a)
+			}
+		},
+		destroy: function() {
+			this.destroyed = !0, this.stop(), this.prevEl && (this.prevEl.removeEventListener("click", this, !1), this.prevEl = null), this.nextEl && (this.nextEl.removeEventListener("click", this, !1), this.nextEl = null), this.indicators = null, this.el.removeEventListener(e.start, this, !1), this.el.removeEventListener(e.move, this, !1), this.el.removeEventListener(e.end, this, !1), this.el = this.wrap = this.items = null, this.iscroll = null
+		}
+	}, g = null, a.Slide = r
+
+	if( typeof define === 'function' && (define.amd || seajs) ){
+        define('Slide', [], function(){
+            return r;
+        });
+    }else if ( typeof module !== 'undefined' && module.exports ) {
+        module.exports = r;
+    }
+})(window);
+},{}],6:[function(require,module,exports){
 /**
  * Money
  *
@@ -2998,7 +3291,7 @@ var Statistics = require("./statics"),
     module.exports = MONEY;
 
 
-},{"./ADUtils":1,"./CookieUtil":2,"./MSOHUAD":3,"./config":5,"./jsonp":8,"./statics":10,"./supporter":11}],5:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./MSOHUAD":4,"./config":7,"./jsonp":9,"./statics":11,"./supporter":12}],7:[function(require,module,exports){
 (function(window) {
     var CookieUtil = require("./CookieUtil");
     var hostName = window.location.hostname,
@@ -3096,316 +3389,7 @@ var Statistics = require("./statics"),
     module.exports = MSOHUBASEAD;
 
 })(window);
-},{"./CookieUtil":2}],6:[function(require,module,exports){
-(function () {
-	var document = window.document,
-		Statistics = require("./statics"),
-		innerHeight = window.innerHeight,
-		innerWidth = window.innerWidth,
-		body = document.body,
-		baseStatisUrl = ''; //默认的发送统计链接
-
-	/*
-	* @param {Object} rootDom : 某块需要统计曝光的DOM元素，默认为body
-	* @param {String} exposureCode : 曝光码
-	* @param {Function} isStatisElement : 判断一个元素是否是曝光统计元素,参数是一个dom对象，默认为a标签，返回一个对象,有两个属性:{ isNeedStatis: true, param: {} }。
-	**/
-
-	function ExposureStatis ( rootDom, exposureCode, isStatisElement ) {
-
-		this.rootDom = rootDom || body;
-		this.exposureCode = exposureCode || '';
-        this.isStatisElement = isStatisElement || null;
-		//所有要统计的曝光元素数组
-		/********
-		*每个值的格式
-		*	{
-		*		dom: domObj, //dom对象
-				param : {}   //参数对象
-		*	}
-		***************/
-		this.domArr = [];
-		//setTimeout对象
-		this.statisticsTimer = null;
-
-		this.init( this.rootDom );
-	}
-
-	ExposureStatis.prototype = {
-
-		// 统计的间隔时间
-		intervalTime : 0,
-
-		init : function ( rootDom ){
-
-			this.addElements( rootDom );
-			this.sendFirstScreenStatis();
-			this.addExposureListen( );
-		},
-
-		// 添加所有的曝光统计元素
-		addElements : function ( rootDom ) {
-			var aTagArr = rootDom.getElementsByTagName('a'),
-				len = aTagArr.length,
-				i;
-
-			if (len === 0) return;
-			
-			for ( i = 0; i < len; i++ ) {
-				this.addElement(aTagArr[i]);
-			}
-		},
-
-		/*
-		* 添加新的曝光统计元素(传入的参数是dom数组)
-		* 增加一个添加曝光统计对象的方法
-		* 修改添加新的曝光统计元素的方法，添加方法时可以添加元素的所有统计数据。添加的数据格式为：
-		*	{
-		*		isWithParam: true, // 是否是自带参数，用来进行判断的
-		*		dom: '', // 需要统计的曝光dom对象
-		*		url: '', // 发送曝光统计的基本链接
-		*		param: {	// 曝光统计的参数
-		*		
-		*		},
-		*		isSendStatis: function() { // 是否发送统计的判断函数，return一个boolean变量
-		*		
-		*		}
-		*	}
-		**/
-		addNewElements : function ( inputParameter ) {
-			if( this.domArr.length === 0){
-				this.removeExposureListen();
-				this.addExposureListen( );
-			}
-
-			// 传入的是dom数组时
-			if ( toString.call(inputParameter) === '[object Array]' && inputParameter.length !== 0){
-				var len = inputParameter.length,
-					i;
-				for ( i = 0; i < len; i++ ) {
-					this.addElement(inputParameter[i]);
-				}
-			} else if ( toString.call(inputParameter) === '[object Object]' && inputParameter.isWithParam) { //传入的是一个自带参数的统计对象时
-				this.addElement(inputParameter);
-			}
-		},
-
-		// 未滚动的情况下，直接发送首屏已曝光的元素
-		sendFirstScreenStatis : function () {
-			var that = this;
-			//判断所有的元素是否曝光
-			this.allIsExposure(that.domArr);
-		},
-
-		// 添加曝光监听
-		addExposureListen : function () {
-			var that = this;
-
-			window.addEventListener( 'scroll', proxy( that.exposureListenFunc, that), false );
-		},
-
-		// 移除曝光监听
-		removeExposureListen : function () {
-			var that = this;
-
-			window.removeEventListener( 'scroll', proxy( that.exposureListenFunc, that), false);
-		},
-
-		// 曝光监听函数
-		exposureListenFunc : function () {
-			var that = this;
-			// that.allIsExposure(that.domArr);
-
-			clearInterval(that.statisticsTimer);
-			that.statisticsTimer = setTimeout(function () {
-					that.allIsExposure(that.domArr);
-				}, that.intervalTime);
-
-		},
-
-		// 对所有的监听元素，判断是否曝光
-		allIsExposure : function ( arr ) {
-			var i,
-				len = arr.length,
-				domArr = this.domArr,
-				indexArr = [];
-
-			//没有监听元素时
-			if (len === 0) {
-				this.removeExposureListen();
-				return;
-			}
-
-			for ( i = 0; i < len; i++) {
-				var isEXpos = this.isExposure(domArr[i].dom);
-
-				if(isEXpos){
-					if (!!domArr[i].url) { // 自带发送曝光统计地址的统计发送
-						if (!!domArr[i].isSendStatis) {  // 有是否发送曝光统计的判断函数的情况下,返回true才发送统计
-							if (domArr[i].isSendStatis()) { 
-								Statistics.addStatistics(domArr[i].param, domArr[i].url);
-								indexArr.push(i);
-							}
-						}else{
-							Statistics.addStatistics(domArr[i].param, domArr[i].url);
-							indexArr.push(i);
-						}
-					}else{
-						Statistics.addStatistics(domArr[i].param);
-						indexArr.push(i);
-					}
-				}
-			}
-
-			this.removeElement(indexArr);
-		},
-
-		// 增加一个监听元素
-		addElement : function ( domObj ) {
-			var that = this,
-				isStatisElementObj;
-
-			if (!!domObj.isWithParam) {
-				isStatisElementObj = that.isStatisElement(domObj.dom);
-			}else{
-				isStatisElementObj = that.isStatisElement(domObj);
-			}
-                
-
-            if(isStatisElementObj.isNeedStatis){
-                var tempObj = {};
-
-				if (!!domObj.isWithParam) { // 自带参数的曝光统计对象
-					tempObj.dom = domObj.dom;
-					tempObj.param = domObj.param;
-					tempObj.url = domObj.url;
-					tempObj.isSendStatis = domObj.isSendStatis;
-
-				} else { // 一般的曝光统计对象
-					tempObj.dom = domObj;
-					tempObj.param = {
-						_once_: that.exposureCode,
-						rdm: Math.random().toString().substring(2, 15)
-					};
-				}
-
-               tempObj.param = extend( tempObj.param, isStatisElementObj.param );
-
-                that.domArr.push(tempObj);
-            }
-
-		},
-
-		// 删除指定的监听元素
-		removeElement : function ( indexArr ) {
-			this.domArr = remove(this.domArr, indexArr );
-		},
-
-		// 判断dom元素是否曝光
-		// 返回Boolean值
-		isExposure : function ( domObj, overHeight ) {
-			var overScreenHeight, // 网页超出屏幕的高度
-				distanceTopHeight,// 元素距离页面顶部的高度
-				distanceScreenTopHeight, // 元素距离屏幕顶部的高度
-				distance;
-
-			if( domObj ) {
-				distance = !!overHeight ? ( domObj.clientHeight + overHeight ) : domObj.clientHeight;
-				overScreenHeight = getScrollY();
-				distanceTopHeight = getOffsetTop(domObj);
-				distanceScreenTopHeight = distanceTopHeight - overScreenHeight;
-
-				// 判断元素的顶部是否暴露在屏幕中
-				if ( distanceScreenTopHeight > 0 && distanceScreenTopHeight < innerHeight ) {
-					domObj.isDomTopExposure = true;
-				}
-
-				// 判断元素的底部是否暴露在屏幕中
-				if ( distanceScreenTopHeight > -distance && distanceScreenTopHeight < innerHeight - distance ) {
-					domObj.isDomBottomExposure = true;
-				}
-
-				return ( !!domObj.isDomTopExposure && !!domObj.isDomBottomExposure );
-
-			}
-
-			return false;
-		}
-
-	};
-
-	
-
-	// 给数组添加一个删除元素方法
-	function remove (arr, index) {
-		if( typeof arr === 'object' && toString.call(arr) === '[object Array]'){
-			if ( typeof index === 'number' &&  index >= 0 ) {
-				return arr.remove ? arr.remove(index) : arr.slice(0, index).concat(arr.slice( index + 1, arr.length));
-			} else if ( typeof index === 'object' && toString.call(index) === '[object Array]' ) {
-				//传入一个下标数组，删除这些元素
-				var newArr = [];
-				for ( var i = 0, len = index.length; i < len; i++ ){
-					arr[index[i]] = void 0;
-				}
-
-				for( var j = 0, arrLen = arr.length; j < arrLen; j++ ){
-					if ( arr[j] !== void 0 ) {
-						newArr.push(arr[j]);
-					}
-				}
-
-				return newArr;
-			}
-			
-		}
-	}
-
-	// 获取网页超出屏幕的高度
-	function getScrollY() {
-		return window.pageYOffset || window.scrollY || document.documentElement.scrollTop;
-	}
-
-	// 获取元素距离页面顶部的高度
-	function getOffsetTop(dom) {
-		var top = 0;
-
-		while ( dom.offsetParent &&　dom.offsetParent !== '') {
-			top = top + dom.offsetTop;
-			dom = dom.offsetParent;
-		}
-
-		return top;
-	}
-
-	// 指定函数的运行作用域
-	function  proxy ( fun, context ) {
-		var source = context || this;
-
-		return function () {
-			fun.apply(source, arguments);
-		};
-	}
-
-    // 扩展对象的属性
-    function extend ( c, p ){
-        var isObject = function ( p ){
-            return Object.prototype.toString.call(p) === '[object Object]';
-        };
-
-        if( !isObject(c) || !isObject(p) ) return;
-
-        for ( var i in p ){
-            if(p.hasOwnProperty(i)){
-                c[i] = p[i];
-            }
-        }
-
-        return c;
-    }
-
-    module.exports = ExposureStatis;
-})(window);
-},{"./statics":10}],7:[function(require,module,exports){
+},{"./CookieUtil":2}],8:[function(require,module,exports){
 var CookieUtil = require("./CookieUtil"),
     MSOHUAD = require("./MSOHUAD"),
     MONEY = require("./ad"),
@@ -3418,7 +3402,10 @@ var CookieUtil = require("./CookieUtil"),
     adHeadlineMapParam = window.adHeadlineMapParam, //头条banner图广告参数
     // MSOHU = window.MSOHU || (window.MSOHU = {}),
     
-   
+    Statistics = require("./statics.js"),
+    Slide = require("./Slide.js"),
+    ImageLazyLoader = require("./ImageLazyLoader"),
+    Jsonp = require("./jsonp"),
     // 
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
@@ -3455,8 +3442,47 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
+new Jsonp({
+    success: function() {
+        var a = document.querySelectorAll('img[data-webp="1"]');
+        if (a.length > 0 && n(a, "original"), new ImageLazyLoader({
+            realSrcAttribute: "original"
+        }), !CookieUtil.get("supportwebp")) {
+            var b = new Date;
+            b.setTime(b.getTime() + 864e5), CookieUtil.set("supportwebp", "1", b), Statistics.addStatistics({
+                _once_: "000186",
+                webp: 1
+            })
+        }
+    },
+    error: function() {
+        if (new ImageLazyLoader({
+            realSrcAttribute: "original"
+        }), !CookieUtil.get("supportwebp")) {
+            var a = new Date;
+            a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+                _once_: "000186",
+                webp: 0
+            })
+        }
+    }
+})
+
+var mySlide = new Slide({
+    targetSelector: ".topic-info",
+    prevSelector: ".topic-info .page-prev",
+    nextSelector: ".topic-info .page-next",
+    onSlide: function(a) {
+        // console.log(a)
+        0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
+            document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
+            for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
+        }
+    }
+});
+
 var homeAdData = [
-    [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
+    [4, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
     // ["", 12926, '12926', 1, '30000001']
 ];
@@ -3478,7 +3504,7 @@ function init() {
     //homeBottomBannerAd();
 
     // 首页广告
-    MONEY.indexWin();
+    // MONEY.indexWin();
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
@@ -3490,7 +3516,7 @@ function init() {
     // MONEY.gif();
 
     // // h5广告
-    MONEY.implantH5();
+    // MONEY.implantH5();
 
     // // 新闻版块最后一条文字链广告
     // homeNewsTextAd();
@@ -3499,7 +3525,7 @@ function init() {
     // homeMilitaryTextAd();
 
     // // 狐首图文混排广告
-    homeGraphicMixeAd();
+    // homeGraphicMixeAd();
 
 
     // //头条要闻速递广告统计码的发送
@@ -3855,7 +3881,7 @@ function renderCarAdAndSendStatis(opts) {
                 } else if (type === 4) {
                     adDom = document.createElement('li');
                     adDom.id = adDomId;
-                    Utils.addClass(adDom, 'topic-item');
+                    MSOHUAD.Utils.addClass(adDom, 'topic-item');
                     adDom.innerHTML = renderAdTemplate(adInfo);
                     adDom.setAttribute('data-msohu-money', 'true');
 
@@ -3876,6 +3902,8 @@ function renderCarAdAndSendStatis(opts) {
                     if (focusMapPageWrapper.querySelectorAll('span').length !== 0) {
                         focusMapPageWrapper.appendChild(spanDom);
                     }
+
+                    mySlide.refresh();
 
                 }else if (type === 8) {
                     adDom = document.getElementById(adDomId);
@@ -3987,7 +4015,7 @@ function renderCarAdAndSendStatis(opts) {
                     containerDom = adDom;
                     targetDom = adDom;
                     if (type === 4) {
-                        setFocusMapPicsPosition();
+                        MSOHUAD.setFocusMapPicsPosition();
                     }
                 } else if (type === 2) {
                     containerDom = adDom.querySelector('.hushoubanner');
@@ -4123,7 +4151,7 @@ function renderCarAdAndSendStatis(opts) {
     });
 }
 
-},{"./ADUtils":1,"./CookieUtil":2,"./MSOHUAD":3,"./ad":4,"art-template":14}],8:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./ImageLazyLoader":3,"./MSOHUAD":4,"./Slide.js":5,"./ad":6,"./jsonp":9,"./statics.js":11,"art-template":15}],9:[function(require,module,exports){
 (function () {
     var document = window.document;
 
@@ -4258,7 +4286,7 @@ function renderCarAdAndSendStatis(opts) {
     
     window.Jsonp = Jsonp;
 })(window);
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function (window) {
 
 	var utils = {
@@ -4582,7 +4610,7 @@ function renderCarAdAndSendStatis(opts) {
 	window.NewExposureStatis = NewExposureStatis;
 
 })(window);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
 var $ = window.$;
 var Statistics = {
@@ -4686,7 +4714,7 @@ var Statistics = {
 
 module.exports = Statistics;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function(window) {
     var navigator = window.navigator,
         userAgent = navigator.userAgent,
@@ -4795,7 +4823,7 @@ module.exports = Statistics;
     
     window.Supporter = Supporter;
 })(window);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*!
  * artTemplate - Template Engine
  * https://github.com/aui/artTemplate
@@ -5385,143 +5413,6 @@ function compiler (source, options) {
 
 
 
-// 定义模板引擎的语法
-
-
-defaults.openTag = '{{';
-defaults.closeTag = '}}';
-
-
-var filtered = function (js, filter) {
-    var parts = filter.split(':');
-    var name = parts.shift();
-    var args = parts.join(':') || '';
-
-    if (args) {
-        args = ', ' + args;
-    }
-
-    return '$helpers.' + name + '(' + js + args + ')';
-}
-
-
-defaults.parser = function (code, options) {
-
-    // var match = code.match(/([\w\$]*)(\b.*)/);
-    // var key = match[1];
-    // var args = match[2];
-    // var split = args.split(' ');
-    // split.shift();
-
-    code = code.replace(/^\s/, '');
-
-    var split = code.split(' ');
-    var key = split.shift();
-    var args = split.join(' ');
-
-    
-
-    switch (key) {
-
-        case 'if':
-
-            code = 'if(' + args + '){';
-            break;
-
-        case 'else':
-            
-            if (split.shift() === 'if') {
-                split = ' if(' + split.join(' ') + ')';
-            } else {
-                split = '';
-            }
-
-            code = '}else' + split + '{';
-            break;
-
-        case '/if':
-
-            code = '}';
-            break;
-
-        case 'each':
-            
-            var object = split[0] || '$data';
-            var as     = split[1] || 'as';
-            var value  = split[2] || '$value';
-            var index  = split[3] || '$index';
-            
-            var param   = value + ',' + index;
-            
-            if (as !== 'as') {
-                object = '[]';
-            }
-            
-            code =  '$each(' + object + ',function(' + param + '){';
-            break;
-
-        case '/each':
-
-            code = '});';
-            break;
-
-        case 'echo':
-
-            code = 'print(' + args + ');';
-            break;
-
-        case 'print':
-        case 'include':
-
-            code = key + '(' + split.join(',') + ');';
-            break;
-
-        default:
-
-            // 过滤器（辅助方法）
-            // {{value | filterA:'abcd' | filterB}}
-            // >>> $helpers.filterB($helpers.filterA(value, 'abcd'))
-            // TODO: {{ddd||aaa}} 不包含空格
-            if (/^\s*\|\s*[\w\$]/.test(args)) {
-
-                var escape = true;
-
-                // {{#value | link}}
-                if (code.indexOf('#') === 0) {
-                    code = code.substr(1);
-                    escape = false;
-                }
-
-                var i = 0;
-                var array = code.split('|');
-                var len = array.length;
-                var val = array[i++];
-
-                for (; i < len; i ++) {
-                    val = filtered(val, array[i]);
-                }
-
-                code = (escape ? '=' : '=#') + val;
-
-            // 即将弃用 {{helperName value}}
-            } else if (template.helpers[key]) {
-                
-                code = '=#' + key + '(' + split.join(',') + ');';
-            
-            // 内容直接输出 {{value}}
-            } else {
-
-                code = '=' + code;
-            }
-
-            break;
-    }
-    
-    
-    return code;
-};
-
-
 
 // RequireJS && SeaJS
 if (typeof define === 'function') {
@@ -5537,7 +5428,7 @@ if (typeof define === 'function') {
 }
 
 })();
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var fs = require('fs');
 var path = require('path');
 
@@ -5623,7 +5514,7 @@ module.exports = function (template) {
 
 	return template;
 }
-},{"fs":15,"path":16}],14:[function(require,module,exports){
+},{"fs":16,"path":17}],15:[function(require,module,exports){
 /*!
  * artTemplate[NodeJS]
  * https://github.com/aui/artTemplate
@@ -5631,11 +5522,11 @@ module.exports = function (template) {
  */
 
 var node = require('./_node.js');
-var template = require('../dist/template-debug.js');
+var template = require('../dist/template-native-debug.js');
 module.exports = node(template);
-},{"../dist/template-debug.js":12,"./_node.js":13}],15:[function(require,module,exports){
+},{"../dist/template-native-debug.js":13,"./_node.js":14}],16:[function(require,module,exports){
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5863,7 +5754,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":17}],17:[function(require,module,exports){
+},{"_process":18}],18:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5959,4 +5850,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[7]);
+},{}]},{},[8]);

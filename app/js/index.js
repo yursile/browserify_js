@@ -10,7 +10,10 @@ var CookieUtil = require("./CookieUtil"),
     adHeadlineMapParam = window.adHeadlineMapParam, //头条banner图广告参数
     // MSOHU = window.MSOHU || (window.MSOHU = {}),
     
-   
+    Statistics = require("./statics.js"),
+    Slide = require("./Slide.js"),
+    ImageLazyLoader = require("./ImageLazyLoader"),
+    Jsonp = require("./jsonp"),
     // 
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
@@ -47,8 +50,47 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
+new Jsonp({
+    success: function() {
+        var a = document.querySelectorAll('img[data-webp="1"]');
+        if (a.length > 0 && n(a, "original"), new ImageLazyLoader({
+            realSrcAttribute: "original"
+        }), !CookieUtil.get("supportwebp")) {
+            var b = new Date;
+            b.setTime(b.getTime() + 864e5), CookieUtil.set("supportwebp", "1", b), Statistics.addStatistics({
+                _once_: "000186",
+                webp: 1
+            })
+        }
+    },
+    error: function() {
+        if (new ImageLazyLoader({
+            realSrcAttribute: "original"
+        }), !CookieUtil.get("supportwebp")) {
+            var a = new Date;
+            a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+                _once_: "000186",
+                webp: 0
+            })
+        }
+    }
+})
+
+var mySlide = new Slide({
+    targetSelector: ".topic-info",
+    prevSelector: ".topic-info .page-prev",
+    nextSelector: ".topic-info .page-next",
+    onSlide: function(a) {
+        // console.log(a)
+        0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
+            document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
+            for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
+        }
+    }
+});
+
 var homeAdData = [
-    [1, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
+    [4, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
     // ["", 12926, '12926', 1, '30000001']
 ];
@@ -70,7 +112,7 @@ function init() {
     //homeBottomBannerAd();
 
     // 首页广告
-    MONEY.indexWin();
+    // MONEY.indexWin();
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
@@ -82,7 +124,7 @@ function init() {
     // MONEY.gif();
 
     // // h5广告
-    MONEY.implantH5();
+    // MONEY.implantH5();
 
     // // 新闻版块最后一条文字链广告
     // homeNewsTextAd();
@@ -91,7 +133,7 @@ function init() {
     // homeMilitaryTextAd();
 
     // // 狐首图文混排广告
-    homeGraphicMixeAd();
+    // homeGraphicMixeAd();
 
 
     // //头条要闻速递广告统计码的发送
@@ -447,7 +489,7 @@ function renderCarAdAndSendStatis(opts) {
                 } else if (type === 4) {
                     adDom = document.createElement('li');
                     adDom.id = adDomId;
-                    Utils.addClass(adDom, 'topic-item');
+                    MSOHUAD.Utils.addClass(adDom, 'topic-item');
                     adDom.innerHTML = renderAdTemplate(adInfo);
                     adDom.setAttribute('data-msohu-money', 'true');
 
@@ -468,6 +510,8 @@ function renderCarAdAndSendStatis(opts) {
                     if (focusMapPageWrapper.querySelectorAll('span').length !== 0) {
                         focusMapPageWrapper.appendChild(spanDom);
                     }
+
+                    mySlide.refresh();
 
                 }else if (type === 8) {
                     adDom = document.getElementById(adDomId);
@@ -579,7 +623,7 @@ function renderCarAdAndSendStatis(opts) {
                     containerDom = adDom;
                     targetDom = adDom;
                     if (type === 4) {
-                        setFocusMapPicsPosition();
+                        MSOHUAD.setFocusMapPicsPosition();
                     }
                 } else if (type === 2) {
                     containerDom = adDom.querySelector('.hushoubanner');
