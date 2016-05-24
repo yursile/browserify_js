@@ -112,7 +112,7 @@ function init() {
     //homeBottomBannerAd();
 
     // 首页广告
-    // MONEY.indexWin();
+    MONEY.indexWin();
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
@@ -124,7 +124,7 @@ function init() {
     // MONEY.gif();
 
     // // h5广告
-    // MONEY.implantH5();
+    MONEY.implantH5();
 
     // // 新闻版块最后一条文字链广告
     // homeNewsTextAd();
