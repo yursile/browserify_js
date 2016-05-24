@@ -3526,6 +3526,8 @@ var homeAdData = [
     // ["", 12926, '12926', 1, '30000001']
 ];
 
+//通过MONEY没有&没有newschn
+
 MSOHUAD.homeAdData = homeAdData;
 /**
  * entry
