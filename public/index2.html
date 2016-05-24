@@ -17,6 +17,199 @@
 
 <link rel="stylesheet" href="//s3.rr.itc.cn/h5/css/msohu/v3/tags/3.3.84/c/chupingyangshi_b.css" />
 
+<style>
+/** 引用广告样式 **/
+/* 浮层广告 */
+.index-win-money-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.index-win-money-img-inner {
+  display: table;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 99px 40px 0;
+  box-sizing: border-box;
+}
+.index-win-money-img-inner-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+.index-win-money-img-sub .index-win-money-img-inner {
+  padding-top: 51px;
+}
+.index-win-money-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 27px;
+  height: 27px;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-win-money-imgs.png") no-repeat;
+  background-size: 35px;
+  z-index: 99;
+}
+.index-win-money-time {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-win-money-imgs.png") no-repeat;
+  background-size: 35px;
+  -webkit-box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+}
+.index-win-money-img-close {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid #000;
+  height: 14px;
+  line-height: 14px;
+  top: -16px;
+  width: inherit;
+  padding: 0 5px;
+  font-size: 9px;
+  font-weight: normal;
+  font-family: helvetica, verdana, san-serif;
+  color: #333;
+  display: none;
+}
+.index-win-money-time-3 {
+  background-position: 0 -35px;
+}
+.index-win-money-time-2 {
+  background-position: 0 -70px;
+}
+.index-win-money-time-1 {
+  background-position: 0 -105px;
+}
+.index-win-money-time-0 {
+  display: none;
+}
+.index-win-money-img p {
+  position: relative;
+}
+.index-win-money-img img {
+  width: 100%;
+}
+.index-win-money-text {
+  display: none;
+  position: relative;
+  padding-right: 28px;
+  background-color: #FFFFFF;
+}
+.index-win-money-text a {
+  color: #AC6A00;
+  font-size: 14px;
+  padding: 3px 3px 3px 5px;
+  display: block;
+}
+/* 首页下拉广告 */
+.index-select-money img {
+  width: 100%;
+  vertical-align: bottom;
+}
+.index-select-money-text {
+  position: relative;
+  color: #ac6a00;
+  font-size: 14px;
+  padding-right: 50px;
+  background-color: #FFFFFF;
+}
+.index-select-money-text a {
+  color: #ac6a00;
+  display: block;
+  padding: 3px 3px 3px 5px;
+}
+.index-select-money-zoom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  background: url("http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/index-select-money-imgs.png") no-repeat right 10px;
+  background-size: 19px;
+  background-position-x: 25px;
+  z-index: 99;
+}
+.index-select-money-text .index-select-money-zoom {
+  padding: 0;
+}
+.index-select-money-img {
+  display: none;
+  position: relative;
+}
+.index-select-money-showimg .index-select-money-zoom {
+  background-position-y: -17px;
+}
+.index-select-money-showimg .index-select-money-img {
+  display: block;
+}
+/* 微动摄影广告 */
+.videoRoot{
+    position: relative;
+} 
+.videoRoot i{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    margin: -31px 0 0 -27px;
+    width: 54px;
+    height: 63px;
+    background: url(http://s2.rr.itc.cn/h5/css/msohu/v3/tags/i/gif-play.png);
+    background-size: cover;    
+}
+.video_player .toResouse{
+    padding: 0 10px;
+    font-size: 14px;
+    color: #ffffff;
+}
+.video_player .toResouse a{
+    color: #ffffff;
+}
+.video_player .toResouse span{
+    float:right;
+}
+/* 图混广告 */
+.ptlist li{
+    position: relative;    
+}
+.ptlist li em{
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    font-size: 12px;
+    color: #ffffff;    
+}
+/* 通栏广告 */
+.full_banner{
+    margin: 0 0 10px;
+}
+/* 焦点图广告标示 */
+.focus-map-ad .focus a em{
+    position: absolute;
+    right: 5px;
+    top: 1px;
+    font-size: 12px;
+    color: #ffffff;    
+}
+.focusbox1 {
+  height: 330px;
+}
+
+.indexWin header{
+	height: 0;
+}
+</style>
+
 <style type="text/css">
 .ad_1 a img{
 	width: 100%;
@@ -485,7 +678,21 @@ background:#000;
 
 
 	<div class="ad_1" id="beans_12922"></div>
+<!---s 视频广告-->
+<section class="video_player" id="beans_12926">
+</section>
 
+<!---e 视频广告-->
+
+<!--s 下拉全屏 -->
+<section id="beans_12925">
+</section>
+<!--e 下拉全屏 -->
+
+<!--s 浮层广告 -->
+<section id="beans_12924" class="indexWin">
+  <header></header>
+</section>
 
 	<script type="text/javascript">
 	(function(window) {
