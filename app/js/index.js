@@ -2,7 +2,7 @@ var CookieUtil = require("./CookieUtil"),
     MSOHUAD = require("./MSOHUAD"),
     MONEY = require("./ad"),
     template = require("art-template"),
-    ADUtil = require("./ADUtils");
+    ADUtil = require("./ADUtils"),
     AD = MSOHU.AD || (MSOHU.AD = {}),
     adDataHandle = MSOHUAD.adDataHandle,
     handleFormalAndTestAdParam = MSOHUAD.handleFormalAndTestAdParam,
@@ -14,6 +14,7 @@ var CookieUtil = require("./CookieUtil"),
     Slide = require("./Slide.js"),
     ImageLazyLoader = require("./ImageLazyLoader"),
     Jsonp = require("./jsonp"),
+    Utils = MSOHUAD.Utils,
     // 
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
@@ -92,6 +93,7 @@ var mySlide = new Slide({
 var homeAdData = [
     [4, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
+    [8, 14281, "12964", 2, "6400100"]
     // ["", 12926, '12926', 1, '30000001']
 ];
 

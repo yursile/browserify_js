@@ -22,7 +22,7 @@
         },
 
         setParams: function() {
-            this.url = this.url + (this.url.indexOf('?') === -1 ? '?' : '&') + params(this.data) + '&_time_=' + (new Date() * 1);
+            this.url = this.url + (this.url.indexOf('?') === -1 ? '?' : '') + params(this.data) + '&_time_=' + (new Date() * 1);
 
             if ( /callback=(\w+)/.test(this.url) ) {
                 this.callbackName = RegExp.$1;

@@ -1717,6 +1717,7 @@ var Statistics = require("./statics"),
 			baseData = addTurnParam(opts.maxTurn, adTurnName);
 		}
 
+		//添加newschn
 		baseData = Utils.addChannelParam(baseData);
 
 		result.baseData = baseData;
@@ -3348,18 +3349,54 @@ var Statistics = require("./statics"),
      * @param {Array} baseAdParam: 基本的广告参数。
      * 第一列为自定义广告类型(可以为空)，第二列为正式广告为id，第三列为测试广告位id(可以为空)，第四列为广告adps参数。
      */
+    
+
+    function addChannelParam(baseData) {
+        var hostName = window.location.hostname,
+            pathName = window.location.pathname,
+            channelPageRegResult = /\/c\/(\d+)/i.exec(pathName),
+            finalPageRegResult = /\/n\/(\d+)/i.exec(pathName),
+            finalPageChannelData;
+
+        if (!/m\.sohu\.com/.test(hostName)) {
+            return baseData;
+        }
+
+        if (/^\/$/.test(pathName)) {
+            baseData.newschn = '1';
+        }
+
+        if (!!channelPageRegResult) {
+            baseData.newschn = channelPageRegResult[1];
+        }
+
+        if (!!finalPageRegResult && !!window.article_config && !!window.article_config.channel_long_path) {
+            finalPageChannelData = window.article_config.channel_long_path;
+            baseData.newschn = finalPageChannelData[0][1].split('/')[2];
+
+            if (!!finalPageChannelData[1]) {
+                baseData.subchannelid = finalPageChannelData[1][1].split('/')[2];
+            }
+        }
+
+        return baseData;
+    };
+        
     function getAdRequestBaseUrl(baseAdParam) {
 
         if (!isArray(baseAdParam)) {
             return 'http://s.go.sohu.com/adgtr/?';
         }
 
+
+
         var baseUrl = '',
             baseData = {
                 itemspaceid: baseAdParam[1] || 111111,
                 adps: baseAdParam[3] || '160001',
                 adsrc: 13,
-                apt: 4
+                apt: 4,
+
             },
             // 重新生成callback参数的值，防止所有的jsonp请求callback名称相同，出现冲突问题
             getRandomCallback = function() {
@@ -3394,7 +3431,7 @@ var CookieUtil = require("./CookieUtil"),
     MSOHUAD = require("./MSOHUAD"),
     MONEY = require("./ad"),
     template = require("art-template"),
-    ADUtil = require("./ADUtils");
+    ADUtil = require("./ADUtils"),
     AD = MSOHU.AD || (MSOHU.AD = {}),
     adDataHandle = MSOHUAD.adDataHandle,
     handleFormalAndTestAdParam = MSOHUAD.handleFormalAndTestAdParam,
@@ -3406,6 +3443,7 @@ var CookieUtil = require("./CookieUtil"),
     Slide = require("./Slide.js"),
     ImageLazyLoader = require("./ImageLazyLoader"),
     Jsonp = require("./jsonp"),
+    Utils = MSOHUAD.Utils,
     // 
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
@@ -3484,6 +3522,7 @@ var mySlide = new Slide({
 var homeAdData = [
     [4, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
+    [8, 14281, "12964", 2, "6400100"]
     // ["", 12926, '12926', 1, '30000001']
 ];
 
@@ -4176,7 +4215,7 @@ function renderCarAdAndSendStatis(opts) {
         },
 
         setParams: function() {
-            this.url = this.url + (this.url.indexOf('?') === -1 ? '?' : '&') + params(this.data) + '&_time_=' + (new Date() * 1);
+            this.url = this.url + (this.url.indexOf('?') === -1 ? '?' : '') + params(this.data) + '&_time_=' + (new Date() * 1);
 
             if ( /callback=(\w+)/.test(this.url) ) {
                 this.callbackName = RegExp.$1;

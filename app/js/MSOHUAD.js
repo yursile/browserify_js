@@ -1434,6 +1434,7 @@ var Statistics = require("./statics"),
 			baseData = addTurnParam(opts.maxTurn, adTurnName);
 		}
 
+		//添加newschn
 		baseData = Utils.addChannelParam(baseData);
 
 		result.baseData = baseData;

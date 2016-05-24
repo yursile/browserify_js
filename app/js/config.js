@@ -54,18 +54,54 @@
      * @param {Array} baseAdParam: 基本的广告参数。
      * 第一列为自定义广告类型(可以为空)，第二列为正式广告为id，第三列为测试广告位id(可以为空)，第四列为广告adps参数。
      */
+    
+
+    function addChannelParam(baseData) {
+        var hostName = window.location.hostname,
+            pathName = window.location.pathname,
+            channelPageRegResult = /\/c\/(\d+)/i.exec(pathName),
+            finalPageRegResult = /\/n\/(\d+)/i.exec(pathName),
+            finalPageChannelData;
+
+        if (!/m\.sohu\.com/.test(hostName)) {
+            return baseData;
+        }
+
+        if (/^\/$/.test(pathName)) {
+            baseData.newschn = '1';
+        }
+
+        if (!!channelPageRegResult) {
+            baseData.newschn = channelPageRegResult[1];
+        }
+
+        if (!!finalPageRegResult && !!window.article_config && !!window.article_config.channel_long_path) {
+            finalPageChannelData = window.article_config.channel_long_path;
+            baseData.newschn = finalPageChannelData[0][1].split('/')[2];
+
+            if (!!finalPageChannelData[1]) {
+                baseData.subchannelid = finalPageChannelData[1][1].split('/')[2];
+            }
+        }
+
+        return baseData;
+    };
+        
     function getAdRequestBaseUrl(baseAdParam) {
 
         if (!isArray(baseAdParam)) {
             return 'http://s.go.sohu.com/adgtr/?';
         }
 
+
+
         var baseUrl = '',
             baseData = {
                 itemspaceid: baseAdParam[1] || 111111,
                 adps: baseAdParam[3] || '160001',
                 adsrc: 13,
-                apt: 4
+                apt: 4,
+
             },
             // 重新生成callback参数的值，防止所有的jsonp请求callback名称相同，出现冲突问题
             getRandomCallback = function() {
