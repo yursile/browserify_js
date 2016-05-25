@@ -15,15 +15,15 @@
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14283", "12924", "30000001"],  //浮层广告
-        ["", "14284", "12925", "6400320"],  //下拉广告
+        ["", "14426", "12924", "30000001"],  //浮层广告
+        ["", "14427", "12925", "6400320"],  //下拉广告
         // ["", "14284", "12921", "6400320"],  //焦点
         // ["", "14284", "12922", "6400320"],  //通栏
         // ["", "14284", "12923", "6400320"],  //信息流
-        ["", "14288", "12901", "6400320"], //多图广告，H5广告
+        ["", "14430", "12901", "6400320"], //多图广告，H5广告
         // ["", "14287", "12900", "30000001"], //视频广告
-        ["", "12926", "12926", "30000001"],
-        ["", "14286", "12899", "30000001"]  //gif广告
+        ["", "14429", "12926", "30000001"],
+        ["", "14428", "12926", "30000001"]  //gif广告
     ];
 
     //var urlRoot = 'http://s.go.sohu.com/adgtr/?';
@@ -45,7 +45,8 @@
     var isTestEnvironment = function() {
         // 判断是正式环境还是测试环境
         var hostName = window.location.hostname;
-        var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
+        // var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
+        resule = false;
         return result;
     };
 

@@ -19,22 +19,27 @@ var CookieUtil = require("./CookieUtil"),
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
     isTestEnvironment = (function() {
         // 判断是正式环境还是测试环境
-        var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('public') > 0;
+        // var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('public') > 0;
+        result = false;
         return result;
         // return true;
     })();
 
     // 用来判断是否发送统计的函数，应用于焦点图广告av统计的发送(元素曝光的情况下发送)
-    MSOHUAD.isSentStatis = function() {
-        var focusMapAds = $(".focus-map-ad");
-        var result = false;
-        for(var i=0; i<focusMapAds.length; i++){
-            if(focusMapAds.eq(i) && focusMapAds.eq(i).hasClass('swiper-slide-active')){
-                result = true;
-                return result;
-            }
-        }
-        return result;
+    // MSOHUAD.isSentStatis = function() {
+    //     var focusMapAds = $(".focus-map-ad");
+    //     var result = false;
+    //     for(var i=0; i<focusMapAds.length; i++){
+    //         if(focusMapAds.eq(i) && focusMapAds.eq(i).hasClass('swiper-slide-active')){
+    //             result = true;
+    //             return result;
+    //         }
+    //     }
+    //     return result;
+    // };
+    // 
+     MSOHUAD.isSentStatis = function() {
+        return MSOHUAD.focusMapAdIndex === mySlide.activeIndex;
     };
 
 // 所有的广告数据
@@ -51,31 +56,45 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
-new Jsonp({
-    success: function() {
-        var a = document.querySelectorAll('img[data-webp="1"]');
-        if (a.length > 0 && n(a, "original"), new ImageLazyLoader({
-            realSrcAttribute: "original"
-        }), !CookieUtil.get("supportwebp")) {
-            var b = new Date;
-            b.setTime(b.getTime() + 864e5), CookieUtil.set("supportwebp", "1", b), Statistics.addStatistics({
-                _once_: "000186",
-                webp: 1
-            })
-        }
-    },
-    error: function() {
-        if (new ImageLazyLoader({
-            realSrcAttribute: "original"
-        }), !CookieUtil.get("supportwebp")) {
-            var a = new Date;
-            a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
-                _once_: "000186",
-                webp: 0
-            })
-        }
+// new Jsonp({
+//     success: function() {
+//         var a = document.querySelectorAll('img[data-webp="1"]');
+//         if (a.length > 0 && n(a, "original"), new ImageLazyLoader({
+//             realSrcAttribute: "original"
+//         }), !CookieUtil.get("supportwebp")) {
+//             var b = new Date;
+//             b.setTime(b.getTime() + 864e5), CookieUtil.set("supportwebp", "1", b), Statistics.addStatistics({
+//                 _once_: "000186",
+//                 webp: 1
+//             })
+//         }
+//     },
+//     error: function() {
+//         if (new ImageLazyLoader({
+//             realSrcAttribute: "original"
+//         }), !CookieUtil.get("supportwebp")) {
+//             var a = new Date;
+//             a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+//                 _once_: "000186",
+//                 webp: 0
+//             })
+//         }
+//     }
+// })
+// 
+// 
+(function() {
+    if (new ImageLazyLoader({
+        realSrcAttribute: "original"
+    }), !CookieUtil.get("supportwebp")) {
+        var a = new Date;
+        a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+            _once_: "000186",
+            webp: 0
+        })
     }
-})
+})()
+
 
 var mySlide = new Slide({
     targetSelector: ".topic-info",
@@ -91,9 +110,11 @@ var mySlide = new Slide({
 });
 
 var homeAdData = [
-    [4, 12921, '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
-    [8, 14281, '12922', 2, '6400100'],  //美女看展板块上方通栏
-    [8, 14281, "12964", 2, "6400100"]
+    [4, "14420", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
+    [8, "14421", '12922', 2, '6400100'],  //美女看展板块上方通栏
+    [8, "14422", "12964", 2, "6400100"],
+    [8, "14423", "12964", 2, "6400100"],
+    [8, "14424", "12964", 2, "6400100"],
     // ["", 12926, '12926', 1, '30000001']
 ];
 
@@ -111,7 +132,7 @@ if (!isNoADMSohu) {
 function init() {
 
     homeFocusMapAd();
-    // infoFlowAdSend();
+    infoFlowAdSend();
     // homeTopBannerAd();
     //homeBottomBannerAd();
 
@@ -201,7 +222,7 @@ function infoFlowAdSend() {
      *第二个值，是请求的基本url；第三个值是广告为ID；第五个值是用来区分信息流各个板块的类名；第六个参数是max_turn；
      **/
     var infoFlowAdData = [
-        [3, 14282, '12895', '', 3]  // “车展头条”板块第四条信息流广告
+        [3, "14425", '12923', '', 3]  // “车展头条”板块第四条信息流广告
     ];
 
     var i, len,
@@ -468,14 +489,32 @@ function renderCarAdAndSendStatis(opts) {
 
                 // 插入广告(不同的广告类型有不同的插入方法)
                 if (type === 3) { 
+                    var adInfoContainer = document.getElementById("adInfo");
+                    // adInfoContainer.innerHTML += '<div class="it" id="'+adDomId+'" data-msohu-money>'+
+                    //     '<div class="h4WP">'+
+                    //         '<a href="javascript:;"  data-url='+adInfo.data.url+' class="h4">推广 |'+ adInfo.data.text;+'</a>'+
+                    //     '</div>'+
+                    // '</div>'
+
+                    var infoFlowContainer = document.createElement("div");
+                    infoFlowContainer.setAttribute("class","it");
+                    infoFlowContainer.setAttribute("id",adDomId);
+                    infoFlowContainer.setAttribute("data-msohu-money",true);
+                    infoFlowContainer.innerHTML =  '<div class="h4WP">'+
+                            '<a href="javascript:;"  data-url='+adInfo.data.url+' class="h4">推广 |'+ adInfo.data.text;+'</a>'+
+                        '</div>'
+
              
-                    var infoFlowContainer = document.getElementById(adDomId);
-                    var infoFlowLink = infoFlowContainer.querySelector("a");
-                    infoFlowLink.setAttribute("href", "javascript:;");
-                    infoFlowLink.setAttribute("data-url", adInfo.data.url);
-                    infoFlowLink.innerHTML = "推广 | " + adInfo.data.text;
-                    infoFlowContainer.setAttribute("data-msohu-money", true);
+                    // var infoFlowContainer = document.getElementById(adDomId);
+
+                    // var infoFlowLink = infoFlowContainer.querySelector("a");
+                    // infoFlowLink.setAttribute("href", "javascript:;");
+                    // infoFlowLink.setAttribute("data-url", adInfo.data.url);
+                    // infoFlowLink.innerHTML = "推广 | " + adInfo.data.text;
+                    // infoFlowContainer.setAttribute("data-msohu-money", true);
                     adDom = infoFlowContainer;
+                    adInfoContainer.appendChild(adDom);
+                    // adDom = adInfoContainer.getElementById(adDomId);
                 } else if (type === 7){
                     var graphicMixeList = document.querySelector("#swiper1 .ptlist");
                     var graphicMixeItems = graphicMixeList.querySelectorAll("li");
@@ -491,6 +530,7 @@ function renderCarAdAndSendStatis(opts) {
                     lastGraphicMixeItem.setAttribute("data-msohu-money", true);
                     adDom = lastGraphicMixeItem;
                 } else if (type === 4) {
+
                     adDom = document.createElement('li');
                     adDom.id = adDomId;
                     MSOHUAD.Utils.addClass(adDom, 'topic-item');

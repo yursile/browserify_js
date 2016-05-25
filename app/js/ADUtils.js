@@ -93,11 +93,12 @@ var adUtils = {
     isTestEnvironment: function(testEnvReg) {
         var hostName = window.location.hostname;
         var testEnvReg = testEnvReg || /^([tdg][1-9]\.)m\.sohu\.com$/;
-        if(testEnvReg.test(hostName)){
-            return true;
-        }else{
-            return false;
-        }
+        // if(testEnvReg.test(hostName)){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+        return false;
     },
 
 	/**

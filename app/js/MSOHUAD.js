@@ -642,6 +642,8 @@ var Statistics = require("./statics"),
 				otherJudgeMethod: isSendStatisFn
 			})
 			.once();
+			//AV上报
+			// adDomSendStatisObj.sendAVStatis();
 		} else {
 			adDomSendStatisObj.sendAVStatis();
 		}
@@ -1394,12 +1396,13 @@ var Statistics = require("./statics"),
 			};
 
 		// 判断是正式环境还是测试环境
-		if (/^([tdg][1-9]\.)m\.sohu\.com$/.test(hostName)) {
-			isTestEnvironment = true;
-		}
-		if(/^([t][1-9]\.)zhibo\.m\.sohu\.com$/.test(hostName)) {
-			isTestEnvironment = true;
-		}
+		// if (/^([tdg][1-9]\.)m\.sohu\.com$/.test(hostName)) {
+		// 	isTestEnvironment = true;
+		// }
+		// if(/^([t][1-9]\.)zhibo\.m\.sohu\.com$/.test(hostName)) {
+		// 	isTestEnvironment = true;
+		// }
+		isTestEnvironment = false;
 
 		// 测试环境(且测试的广告位id存在)添加bucketid参数
 		if (isTestEnvironment && !!opts.testApId) {

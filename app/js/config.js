@@ -5,7 +5,8 @@
         testBaseAdQuestUrl = 'http://10.16.10.63/adgtr/?',
         isTestEnvironment = (function() {
             // 判断是正式环境还是测试环境
-            var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
+            // var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
+            result = false;
             return result;
         })();
 
@@ -87,8 +88,8 @@
         return baseData;
     };
         
-    function getAdRequestBaseUrl(baseAdParam) {
-
+    function getAdRequestBaseUrl(baseAdPara) {
+        var baseAdParam = addChannelParam(baseAdPara);
         if (!isArray(baseAdParam)) {
             return 'http://s.go.sohu.com/adgtr/?';
         }
@@ -101,6 +102,7 @@
                 adps: baseAdParam[3] || '160001',
                 adsrc: 13,
                 apt: 4,
+                newschn:baseAdParam["newschn"]
 
             },
             // 重新生成callback参数的值，防止所有的jsonp请求callback名称相同，出现冲突问题
