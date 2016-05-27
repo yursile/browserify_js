@@ -926,8 +926,6 @@ var Statistics = require("./statics"),
 				otherJudgeMethod: isSendStatisFn
 			})
 			.once();
-			//AV上报
-			// adDomSendStatisObj.sendAVStatis();
 		} else {
 			adDomSendStatisObj.sendAVStatis();
 		}
@@ -1994,7 +1992,7 @@ var Statistics = require("./statics"),
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14426", "12924", "30000001"],  //浮层广告
+        ["", "14426", "12924", "4800640"],  //浮层广告
         ["", "14427", "12925", "6400320"],  //下拉广告
         // ["", "14284", "12921", "6400320"],  //焦点
         // ["", "14284", "12922", "6400320"],  //通栏
@@ -2060,7 +2058,7 @@ var Statistics = require("./statics"),
             jsv: window['passion_config'] && window['passion_config']['VERSION'] || '06301130',
             r: (Math.random() + '').substring(2, 15),
             bucket: isDataNoEmpty(data) && data.bucket ? data.bucket : '',
-            newschn : isDataNoEmpty(data) && data.newschn ? data.newschn : '',
+            newschn : isDataNoEmpty(data) && data.newschn ? data.newschn : getChannelId().newschn,
             subchannelid : isDataNoEmpty(data) && data.subchannelid ? data.subchannelid : '',
             ch_trans: ch_trans
         };
@@ -2549,7 +2547,7 @@ var Statistics = require("./statics"),
         indexSelect: function() {
             baseAdParam = carExhAdData[1];
 
-            var textNeighbor = document.querySelector('#beans_'+baseAdParam[2]);
+            var textNeighbor = document.querySelector('#beans_'+baseAdParam[1]);
 
             // if(!baseAdParam[1] || !textNeighbor) {
             //     return;
@@ -3924,6 +3922,7 @@ function renderCarAdAndSendStatis(opts) {
                 }
 
                 // 插入广告(不同的广告类型有不同的插入方法)
+                // 信息流广告
                 if (type === 3) { 
                     var adInfoContainer = document.getElementById("adInfo");
                     // adInfoContainer.innerHTML += '<div class="it" id="'+adDomId+'" data-msohu-money>'+
@@ -3949,7 +3948,8 @@ function renderCarAdAndSendStatis(opts) {
                     // infoFlowLink.innerHTML = "推广 | " + adInfo.data.text;
                     // infoFlowContainer.setAttribute("data-msohu-money", true);
                     adDom = infoFlowContainer;
-                    adInfoContainer.appendChild(adDom);
+                    // adInfoContainer.appendChild(adDom);
+                    adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
                     // adDom = adInfoContainer.getElementById(adDomId);
                 } else if (type === 7){
                     var graphicMixeList = document.querySelector("#swiper1 .ptlist");

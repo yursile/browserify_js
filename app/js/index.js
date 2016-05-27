@@ -488,6 +488,7 @@ function renderCarAdAndSendStatis(opts) {
                 }
 
                 // 插入广告(不同的广告类型有不同的插入方法)
+                // 信息流广告
                 if (type === 3) { 
                     var adInfoContainer = document.getElementById("adInfo");
                     // adInfoContainer.innerHTML += '<div class="it" id="'+adDomId+'" data-msohu-money>'+
@@ -513,7 +514,8 @@ function renderCarAdAndSendStatis(opts) {
                     // infoFlowLink.innerHTML = "推广 | " + adInfo.data.text;
                     // infoFlowContainer.setAttribute("data-msohu-money", true);
                     adDom = infoFlowContainer;
-                    adInfoContainer.appendChild(adDom);
+                    // adInfoContainer.appendChild(adDom);
+                    adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
                     // adDom = adInfoContainer.getElementById(adDomId);
                 } else if (type === 7){
                     var graphicMixeList = document.querySelector("#swiper1 .ptlist");

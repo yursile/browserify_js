@@ -642,8 +642,6 @@ var Statistics = require("./statics"),
 				otherJudgeMethod: isSendStatisFn
 			})
 			.once();
-			//AV上报
-			// adDomSendStatisObj.sendAVStatis();
 		} else {
 			adDomSendStatisObj.sendAVStatis();
 		}

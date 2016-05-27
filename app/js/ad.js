@@ -15,7 +15,7 @@
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14426", "12924", "30000001"],  //浮层广告
+        ["", "14426", "12924", "4800640"],  //浮层广告
         ["", "14427", "12925", "6400320"],  //下拉广告
         // ["", "14284", "12921", "6400320"],  //焦点
         // ["", "14284", "12922", "6400320"],  //通栏
@@ -81,7 +81,7 @@
             jsv: window['passion_config'] && window['passion_config']['VERSION'] || '06301130',
             r: (Math.random() + '').substring(2, 15),
             bucket: isDataNoEmpty(data) && data.bucket ? data.bucket : '',
-            newschn : isDataNoEmpty(data) && data.newschn ? data.newschn : '',
+            newschn : isDataNoEmpty(data) && data.newschn ? data.newschn : getChannelId().newschn,
             subchannelid : isDataNoEmpty(data) && data.subchannelid ? data.subchannelid : '',
             ch_trans: ch_trans
         };
@@ -570,7 +570,7 @@
         indexSelect: function() {
             baseAdParam = carExhAdData[1];
 
-            var textNeighbor = document.querySelector('#beans_'+baseAdParam[2]);
+            var textNeighbor = document.querySelector('#beans_'+baseAdParam[1]);
 
             // if(!baseAdParam[1] || !textNeighbor) {
             //     return;
