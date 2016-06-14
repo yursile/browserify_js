@@ -233,7 +233,7 @@ function infoFlowAdSend() {
             type: infoFlowAdData[i][0],
             formalApId: infoFlowAdData[i][1],
             testApId: infoFlowAdData[i][2],
-            adps: 160001,
+            adps: 130001,
             maxTurn: infoFlowAdData[i][4],
             adTurnCookieName: 'home_infoflow_ad_turn',
             adTemplate: adTemplate.adInfoFlow,

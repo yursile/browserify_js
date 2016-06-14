@@ -65,7 +65,6 @@
             return !!(os.ios || os.android || os.wp);
         }()),
 
-        isIphone:os.ihone,
 
         /**
          * 是否webkit内核浏览器

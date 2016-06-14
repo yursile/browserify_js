@@ -874,7 +874,10 @@
                 ucMatch = ua.match(/UCBrowser(?:\/)?([\d\.\/]+)/i),
                 sogouMatch = ua.match(/SogouMobileBrowser(?:\/)?([\d\.\/]+)/i),
                 UCVersionStr = !!ucMatch ? ucMatch[1] : null,
-                UCVersion = 0,
+                // UCVersion = 0,
+                LUCVersion = 0,
+                RUCVersion = 0,
+                UCVersions = 0,
                 QQVersionStr = !!qqMatch ? qqMatch[1] : null,
                 QQVersion = 0;
 
@@ -882,7 +885,11 @@
             if (!!UCVersionStr) {
                 var UCVersionMatch = UCVersionStr.match(/(^\d+\.\d+)/i);
                 if (!!UCVersionMatch) {
-                    UCVersion = Number(UCVersionMatch[1]);
+                    if(UCVersionMatch[1].indexOf())
+                    // UCVersion = Number(UCVersionMatch[1]);
+                    UCVersions = UCVersionMatch[1].split(".")
+                    LUCVersion = Number(UCVersions[0]);
+                    RUCVersion = Number(UCVersions[1])
                 }
             }
 
@@ -893,10 +900,11 @@
                     QQVersion = Number(QQVersionMatch[1]);
                 }
             }
+            // alert(QQVersion);
 
             if( (supporter.os.android && sogouMatch) ||
                 (supporter.os.ios && ucMatch) ||
-                (supporter.os.android && !!ucMatch && UCVersion < 10.4) ||
+                (supporter.os.android && !!ucMatch && LUCVersion < 10 || (LUCVersion == 10 && RUCVersion < 4)) ||
                 (supporter.os.android && !!qqMatch && QQVersion < 4.0) ) {
                 return;
             }

@@ -2851,7 +2851,10 @@ var Statistics = require("./statics"),
                 ucMatch = ua.match(/UCBrowser(?:\/)?([\d\.\/]+)/i),
                 sogouMatch = ua.match(/SogouMobileBrowser(?:\/)?([\d\.\/]+)/i),
                 UCVersionStr = !!ucMatch ? ucMatch[1] : null,
-                UCVersion = 0,
+                // UCVersion = 0,
+                LUCVersion = 0,
+                RUCVersion = 0,
+                UCVersions = 0,
                 QQVersionStr = !!qqMatch ? qqMatch[1] : null,
                 QQVersion = 0;
 
@@ -2859,7 +2862,11 @@ var Statistics = require("./statics"),
             if (!!UCVersionStr) {
                 var UCVersionMatch = UCVersionStr.match(/(^\d+\.\d+)/i);
                 if (!!UCVersionMatch) {
-                    UCVersion = Number(UCVersionMatch[1]);
+                    if(UCVersionMatch[1].indexOf())
+                    // UCVersion = Number(UCVersionMatch[1]);
+                    UCVersions = UCVersionMatch[1].split(".")
+                    LUCVersion = Number(UCVersions[0]);
+                    RUCVersion = Number(UCVersions[1])
                 }
             }
 
@@ -2870,10 +2877,11 @@ var Statistics = require("./statics"),
                     QQVersion = Number(QQVersionMatch[1]);
                 }
             }
+            // alert(QQVersion);
 
             if( (supporter.os.android && sogouMatch) ||
                 (supporter.os.ios && ucMatch) ||
-                (supporter.os.android && !!ucMatch && UCVersion < 10.4) ||
+                (supporter.os.android && !!ucMatch && LUCVersion < 10 || (LUCVersion == 10 && RUCVersion < 4)) ||
                 (supporter.os.android && !!qqMatch && QQVersion < 4.0) ) {
                 return;
             }
@@ -3667,7 +3675,7 @@ function infoFlowAdSend() {
             type: infoFlowAdData[i][0],
             formalApId: infoFlowAdData[i][1],
             testApId: infoFlowAdData[i][2],
-            adps: 160001,
+            adps: 130001,
             maxTurn: infoFlowAdData[i][4],
             adTurnCookieName: 'home_infoflow_ad_turn',
             adTemplate: adTemplate.adInfoFlow,
@@ -4870,7 +4878,6 @@ module.exports = Statistics;
             return !!(os.ios || os.android || os.wp);
         }()),
 
-        isIphone:os.ihone,
 
         /**
          * 是否webkit内核浏览器
