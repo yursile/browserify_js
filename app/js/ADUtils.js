@@ -2,6 +2,7 @@ var MSOHU = window.MSOHU || (window.MSOHU = {}),
 		AD = MSOHU.AD || (MSOHU.AD = {});
 		
 var CookieUtil = require("./CookieUtil");
+var supporter = require("./supporter");
 	// 常用的工具函数
 var utils = {
 
@@ -90,16 +91,18 @@ var adUtils = {
 	 * @desc 判断是否是测试环境
 	 * @param {Object} testEnvReg : 测试环境的正则表达式（可选，有默认值）
 	*/
-    isTestEnvironment: function(testEnvReg) {
-        var hostName = window.location.hostname;
-        var testEnvReg = testEnvReg || /^([tdg][1-9]\.)m\.sohu\.com$/;
-        // if(testEnvReg.test(hostName)){
-        //     return true;
-        // }else{
-        //     return false;
-        // }
-        return false;
-    },
+    // isTestEnvironment: function(testEnvReg) {
+    //     var hostName = window.location.hostname;
+    //     var testEnvReg = testEnvReg || /^([tdg][1-9]\.)m\.sohu\.com$/;
+    //     // if(testEnvReg.test(hostName)){
+    //     //     return true;
+    //     // }else{
+    //     //     return false;
+    //     // }
+    //     return false;
+    // },
+    // 
+    isTestEnvironment:supporter.isTestEnvironment,
 
 	/**
 	 * @desc 判断是否是无广告版本

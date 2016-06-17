@@ -15,15 +15,18 @@ var CookieUtil = require("./CookieUtil"),
     ImageLazyLoader = require("./ImageLazyLoader"),
     Jsonp = require("./jsonp"),
     Utils = MSOHUAD.Utils,
+    supporter = require("./supporter.js"),
     // 
     isNoADMSohu = ADUtil && ADUtil.isNoADMSohu,
-    isTestEnvironment = (function() {
-        // 判断是正式环境还是测试环境
-        // var result = /^m\.sohu\.com$/.test(window.location.hostname) || window.location.href.indexOf('public') > 0;
-        result = false;
-        return result;
-        // return true;
-    })();
+    // isTestEnvironment = (function() {
+    //     // 判断是正式环境还是测试环境
+    //     var result = window.location.href.indexOf('public') > 0;
+    //     // result = false;
+    //     return result;
+    //     // return true;
+    // })();
+    // 
+    isTestEnvironment = supporter.isTestEnvironment;
 
     // 用来判断是否发送统计的函数，应用于焦点图广告av统计的发送(元素曝光的情况下发送)
     // MSOHUAD.isSentStatis = function() {
@@ -56,33 +59,6 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
-// new Jsonp({
-//     success: function() {
-//         var a = document.querySelectorAll('img[data-webp="1"]');
-//         if (a.length > 0 && n(a, "original"), new ImageLazyLoader({
-//             realSrcAttribute: "original"
-//         }), !CookieUtil.get("supportwebp")) {
-//             var b = new Date;
-//             b.setTime(b.getTime() + 864e5), CookieUtil.set("supportwebp", "1", b), Statistics.addStatistics({
-//                 _once_: "000186",
-//                 webp: 1
-//             })
-//         }
-//     },
-//     error: function() {
-//         if (new ImageLazyLoader({
-//             realSrcAttribute: "original"
-//         }), !CookieUtil.get("supportwebp")) {
-//             var a = new Date;
-//             a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
-//                 _once_: "000186",
-//                 webp: 0
-//             })
-//         }
-//     }
-// })
-// 
-// 
 (function() {
     if (new ImageLazyLoader({
         realSrcAttribute: "original"
@@ -111,12 +87,20 @@ var mySlide = new Slide({
 
 var homeAdData = [
     [4, "14420", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
+    // [4, "14420", '12921', 3, '6400320'],
+    // [4, "14420", '12921', 3, '6400320'],
+    // [4, "14420", '12921', 3, '6400320'],
+    // [4, "14420", '12921', 3, '6400320'],
+
+
     [8, "14421", '12922', 2, '6400100'],  //美女看展板块上方通栏
     [8, "14422", "12964", 2, "6400100"],
-    [8, "14423", "12964", 2, "6400100"],
-    [8, "14424", "12964", 2, "6400100"],
+    // [8, "14423", "12964", 2, "6400100"],
+    // [8, "14424", "12964", 2, "6400100"],
     // ["", 12926, '12926', 1, '30000001']
 ];
+
+var infoFlowObj = [];
 
 //通过MONEY没有&没有newschn
 
@@ -222,7 +206,30 @@ function infoFlowAdSend() {
      *第二个值，是请求的基本url；第三个值是广告为ID；第五个值是用来区分信息流各个板块的类名；第六个参数是max_turn；
      **/
     var infoFlowAdData = [
-        [3, "14425", '12923', '', 3]  // “车展头条”板块第四条信息流广告
+        [3, "14425", '12923', '', 3],  // “车展头条”板块第四条信息流广告
+        [3, "14425", '12923', '', 3],
+        [3, "14425", '12923', '', 3],
+        [3, "14425", '12923', '', 3],
+        [3, "14425", '12923', '', 3]
+    ];
+
+    infoFlowObj = [
+        {
+            name:"hudong",
+            time:(document.getElementById("hudong").getElementsByClassName("it").length>=10)?2:1
+        },
+
+        {
+            name:"yaowen",
+            time:(document.getElementById("yaowen").getElementsByClassName("it").length>=10)?2:1
+        },
+
+        
+
+        {
+            name:"china",
+            time:(document.getElementById("china").getElementsByClassName("it").length>=10)?2:1
+        }
     ];
 
     var i, len,
@@ -490,12 +497,10 @@ function renderCarAdAndSendStatis(opts) {
                 // 插入广告(不同的广告类型有不同的插入方法)
                 // 信息流广告
                 if (type === 3) { 
-                    var adInfoContainer = document.getElementById("adInfo");
-                    // adInfoContainer.innerHTML += '<div class="it" id="'+adDomId+'" data-msohu-money>'+
-                    //     '<div class="h4WP">'+
-                    //         '<a href="javascript:;"  data-url='+adInfo.data.url+' class="h4">推广 |'+ adInfo.data.text;+'</a>'+
-                    //     '</div>'+
-                    // '</div>'
+                    // var adInfoContainers = ["hudong","yaowen","china"]
+                    var adInfoContainer = document.getElementById(infoFlowObj[0].name);
+                    // var adInfoContainer = adInfoContainers.shift();
+                    var adInfoContainerSize = adInfoContainer.getElementsByClassName("it").length;
 
                     var infoFlowContainer = document.createElement("div");
                     infoFlowContainer.setAttribute("class","it");
@@ -505,18 +510,21 @@ function renderCarAdAndSendStatis(opts) {
                             '<a href="javascript:;"  data-url='+adInfo.data.url+' class="h4">推广 |'+ adInfo.data.text;+'</a>'+
                         '</div>'
 
-             
-                    // var infoFlowContainer = document.getElementById(adDomId);
+                    adDom = infoFlowContainer;   
 
-                    // var infoFlowLink = infoFlowContainer.querySelector("a");
-                    // infoFlowLink.setAttribute("href", "javascript:;");
-                    // infoFlowLink.setAttribute("data-url", adInfo.data.url);
-                    // infoFlowLink.innerHTML = "推广 | " + adInfo.data.text;
-                    // infoFlowContainer.setAttribute("data-msohu-money", true);
-                    adDom = infoFlowContainer;
-                    // adInfoContainer.appendChild(adDom);
-                    adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
-                    // adDom = adInfoContainer.getElementById(adDomId);
+                    if(adInfoContainerSize>3&&adInfoContainerSize<10){
+                        adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
+                        infoFlowObj.shift();
+                    }else if(adInfoContainerSize>=10){
+                        if(infoFlowObj[0].time==2){
+                            adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
+                        }else if(infoFlowObj[0].time == 1){
+                            adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[10]);
+                            infoFlowObj.shift(); 
+                        }
+
+                    }          
+                    // adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
                 } else if (type === 7){
                     var graphicMixeList = document.querySelector("#swiper1 .ptlist");
                     var graphicMixeItems = graphicMixeList.querySelectorAll("li");

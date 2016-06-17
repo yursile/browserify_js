@@ -1,14 +1,17 @@
 (function(window) {
     var CookieUtil = require("./CookieUtil");
+    var supporter = require("./supporter");
     var hostName = window.location.hostname,
         formalBaseAdQuestUrl = 'http://s.go.sohu.com/adgtr/?',
         testBaseAdQuestUrl = 'http://10.16.10.63/adgtr/?',
-        isTestEnvironment = (function() {
-            // 判断是正式环境还是测试环境
-            // var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
-            result = false;
-            return result;
-        })();
+        // isTestEnvironment = (function() {
+        //     // 判断是正式环境还是测试环境
+        //     var result =  window.location.href.indexOf('public') > 0;
+        //     // result = false;
+        //     return result;
+        // })();
+        // 
+        isTestEnvironment = supporter.isTestEnvironment;
 
     var isArray = function(arg) {
             return Object.prototype.toString.call(arg) === '[object Array]';

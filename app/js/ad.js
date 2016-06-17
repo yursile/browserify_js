@@ -15,13 +15,12 @@
     var supporter = require("./supporter");
     var timeout = 4000;
     var carExhAdData = [
-        ["", "14426", "12924", "4800640"],  //浮层广告
-        ["", "14427", "12925", "6400320"],  //下拉广告
-        // ["", "14284", "12921", "6400320"],  //焦点
-        // ["", "14284", "12922", "6400320"],  //通栏
-        // ["", "14284", "12923", "6400320"],  //信息流
-        ["", "14430", "12901", "6400320"], //多图广告，H5广告
-        // ["", "14287", "12900", "30000001"], //视频广告
+        // ["", "14426", "12924", "4800640"],  //浮层广告
+        // ["", "14427", "12925", "6400320"],  //下拉广告
+        ["", "14426", "12924", "30000001"],
+        ["", "14427", "12925", "30000001"],
+        // ["", "14430", "12901", "6400320"], //多图广告，H5广告
+        ["", "14430", "12926", "30000001"],
         ["", "14429", "12926", "30000001"],
         ["", "14428", "12926", "30000001"]  //gif广告
     ];
@@ -42,13 +41,7 @@
         return Object.keys(data).length > 1;
     };
 
-    var isTestEnvironment = function() {
-        // 判断是正式环境还是测试环境
-        var hostName = window.location.hostname;
-        // var result = /^m\.sohu\.com$/.test(hostName) || window.location.href.indexOf('public') > 0;
-        resule = false;
-        return result;
-    };
+    var isTestEnvironment = supporter.isTestEnvironment;
 
     var getFullUrl = function (url) {
         return url.indexOf('http') === 0 ? url : 'http://' + url;
@@ -570,7 +563,7 @@
         indexSelect: function() {
             baseAdParam = carExhAdData[1];
 
-            var textNeighbor = document.querySelector('#beans_'+baseAdParam[1]);
+            // var textNeighbor = document.querySelector('#beans_'+baseAdParam[1]);
 
             // if(!baseAdParam[1] || !textNeighbor) {
             //     return;
@@ -670,7 +663,7 @@
                     if ( $("#scroller").length !== 0 ) {
                         $("#pullDown").after( root );
                     } else {
-                        textNeighbor.appendChild(root);
+                        indexSelectNode.appendChild(root);
                     }
 
                     countdown();

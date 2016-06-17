@@ -35,6 +35,14 @@
         os.wp7 = /^7/.test(os.version);
     }
 
+    var isTestEnvironment = function() {
+        // 判断是正式环境还是测试环境
+        var hostName = window.location.hostname;
+        // var result =  window.location.href.indexOf('public') > 0;
+        result = true;
+        return result;
+    };
+
     var Supporter = {
         /**
          * 移动设备操作系统信息，可能会包含一下属性:
@@ -92,8 +100,11 @@
         /**
          * 是否QQ浏览器
          */
-        isQQ: /QBrowser/i.test(userAgent)
+        isQQ: /QBrowser/i.test(userAgent),
+        isTestEnvironment:isTestEnvironment
     };
+
+    
 
     if( typeof define === 'function' && (define.amd || seajs) ){
         define('Supporter', [], function(){

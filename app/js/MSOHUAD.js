@@ -1311,7 +1311,7 @@ var Statistics = require("./statics"),
 			formalBaseAdQuestUrl = 'http://s.go.sohu.com/adgtr/?',
 			testBaseAdQuestUrl = 'http://10.16.10.63/adgtr/?',
 			// testBaseAdQuestUrl = 'http://t.adrd.sohuno.com/adgtr/?',
-			isTestEnvironment = false,
+			isTestEnvironment = window.location.href.indexOf('public') > 0,
 			result = {},
 			adTurnName = '';
 
@@ -1400,7 +1400,9 @@ var Statistics = require("./statics"),
 		// if(/^([t][1-9]\.)zhibo\.m\.sohu\.com$/.test(hostName)) {
 		// 	isTestEnvironment = true;
 		// }
-		isTestEnvironment = false;
+		// 
+		isTestEnvironment = window.location.href.indexOf('public') > 0;
+		// isTestEnvironment = false;
 
 		// 测试环境(且测试的广告位id存在)添加bucketid参数
 		if (isTestEnvironment && !!opts.testApId) {
