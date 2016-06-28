@@ -17,12 +17,12 @@
     var carExhAdData = [
         // ["", "14426", "12924", "4800640"],  //浮层广告
         // ["", "14427", "12925", "6400320"],  //下拉广告
-        ["", "14426", "12924", "30000001"],
-        ["", "14427", "12925", "30000001"],
-        // ["", "14430", "12901", "6400320"], //多图广告，H5广告
-        ["", "14430", "12926", "30000001"],
-        ["", "14429", "12926", "30000001"],
-        ["", "14428", "12926", "30000001"]  //gif广告
+        ["", "14658", "12924", "4800640"],
+        ["", "14659", "12925", "6400320"],
+        // ["", "14430", "12901", "6400320"], //多图广告，
+        ["", "14662", "12926", "6400320"],  //H5广告
+        ["", "14661", "12926", "30000001"],  //视频
+        ["", "14660", "12926", "30000001"]  //gif广告
     ];
 
     //var urlRoot = 'http://s.go.sohu.com/adgtr/?';
@@ -416,7 +416,7 @@
                         '<div class="index-win-money-img-inner">' +
                             '<div class="index-win-money-img-inner-cell">' +
                                 '<p>' +
-                                    '<i class="index-win-money-close index-win-money-img-close" data-type="img">关闭广告</i>' +
+                                    '<i class="index-win-money-close index-win-money-img-close" data-type="img"></i>' +
                                     '<a href="javascript:;" data-url="' + url + '">' +
                                     '<i id="index-win-money-time" class="index-win-money-time index-win-money-time-3"></i>' +
                                     '<img src="' + data.resource.file + '" />' +

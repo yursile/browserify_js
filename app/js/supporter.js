@@ -39,7 +39,7 @@
         // 判断是正式环境还是测试环境
         var hostName = window.location.hostname;
         // var result =  window.location.href.indexOf('public') > 0;
-        result = true;
+        result = false;
         return result;
     };
 

@@ -1999,12 +1999,12 @@ var Statistics = require("./statics"),
     var carExhAdData = [
         // ["", "14426", "12924", "4800640"],  //浮层广告
         // ["", "14427", "12925", "6400320"],  //下拉广告
-        ["", "14426", "12924", "30000001"],
-        ["", "14427", "12925", "30000001"],
-        // ["", "14430", "12901", "6400320"], //多图广告，H5广告
-        ["", "14430", "12926", "30000001"],
-        ["", "14429", "12926", "30000001"],
-        ["", "14428", "12926", "30000001"]  //gif广告
+        ["", "14658", "12924", "4800640"],
+        ["", "14659", "12925", "6400320"],
+        // ["", "14430", "12901", "6400320"], //多图广告，
+        ["", "14662", "12926", "6400320"],  //H5广告
+        ["", "14661", "12926", "30000001"],  //视频
+        ["", "14660", "12926", "30000001"]  //gif广告
     ];
 
     //var urlRoot = 'http://s.go.sohu.com/adgtr/?';
@@ -2398,7 +2398,7 @@ var Statistics = require("./statics"),
                         '<div class="index-win-money-img-inner">' +
                             '<div class="index-win-money-img-inner-cell">' +
                                 '<p>' +
-                                    '<i class="index-win-money-close index-win-money-img-close" data-type="img">关闭广告</i>' +
+                                    '<i class="index-win-money-close index-win-money-img-close" data-type="img"></i>' +
                                     '<a href="javascript:;" data-url="' + url + '">' +
                                     '<i id="index-win-money-time" class="index-win-money-time index-win-money-time-3"></i>' +
                                     '<img src="' + data.resource.file + '" />' +
@@ -3418,7 +3418,7 @@ var Statistics = require("./statics"),
             };
 
         // 测试环境(且测试的广告位id存在)添加bucketid参数
-        if (isTestEnvironment && !!baseAdParam[2]) {
+        if (isTestEnvironment() && !!baseAdParam[2]) {
             baseUrl = testBaseAdQuestUrl;
             baseData.itemspaceid = baseAdParam[2];
             baseData.bucketid = 2;
@@ -3469,7 +3469,7 @@ var CookieUtil = require("./CookieUtil"),
     //     // return true;
     // })();
     // 
-    isTestEnvironment = supporter.isTestEnvironment;
+    isTestEnvironment = supporter.isTestEnvironment();
 
     // 用来判断是否发送统计的函数，应用于焦点图广告av统计的发送(元素曝光的情况下发送)
     // MSOHUAD.isSentStatis = function() {
@@ -3529,15 +3529,15 @@ var mySlide = new Slide({
 });
 
 var homeAdData = [
-    [4, "14420", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
+    [4, "14642", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
     // [4, "14420", '12921', 3, '6400320'],
     // [4, "14420", '12921', 3, '6400320'],
     // [4, "14420", '12921', 3, '6400320'],
     // [4, "14420", '12921', 3, '6400320'],
 
 
-    [8, "14421", '12922', 2, '6400100'],  //美女看展板块上方通栏
-    [8, "14422", "12964", 2, "6400100"],
+    [8, "14643", '12922', 2, '6400100'],  //美女看展板块上方通栏
+    [8, "14644", "12964", 2, "6400100"],
     // [8, "14423", "12964", 2, "6400100"],
     // [8, "14424", "12964", 2, "6400100"],
     // ["", 12926, '12926', 1, '30000001']
@@ -3649,31 +3649,37 @@ function infoFlowAdSend() {
      *第二个值，是请求的基本url；第三个值是广告为ID；第五个值是用来区分信息流各个板块的类名；第六个参数是max_turn；
      **/
     var infoFlowAdData = [
-        [3, "14425", '12923', '', 3],  // “车展头条”板块第四条信息流广告
-        [3, "14425", '12923', '', 3],
-        [3, "14425", '12923', '', 3],
-        [3, "14425", '12923', '', 3],
-        [3, "14425", '12923', '', 3]
+        [3, "14652", '12923', '', 3,"yaowen"],  // “车展头条”板块第四条信息流广告
+        [3, "14653", '12923', '', 3,"yaowen"],
+        [3, "14654", '12923', '', 3,"hudong"],
+        [3, "14655", '12923', '', 3,"hudong"],
+        [3, "14656", '12923', '', 3,"china"],
+        [3, "14657", '12923', '', 3,"china"],
     ];
 
-    infoFlowObj = [
-        {
-            name:"hudong",
-            time:(document.getElementById("hudong").getElementsByClassName("it").length>=10)?2:1
-        },
+    // infoFlowObj = [
+    //     {
+    //         name:"hudong",
+    //         time:(document.getElementById("hudong").getElementsByClassName("it").length>=9)?2:1
+    //     },
 
-        {
-            name:"yaowen",
-            time:(document.getElementById("yaowen").getElementsByClassName("it").length>=10)?2:1
-        },
+    //     {
+    //         name:"yaowen",
+    //         time:(document.getElementById("yaowen").getElementsByClassName("it").length>=9)?2:1
+    //     },
 
         
 
-        {
-            name:"china",
-            time:(document.getElementById("china").getElementsByClassName("it").length>=10)?2:1
-        }
-    ];
+    //     {
+    //         name:"china",
+    //         time:(document.getElementById("china").getElementsByClassName("it").length>=9)?2:1
+    //     }
+    // ];
+    infoFlowObj = {
+        "hudong":(document.getElementById("hudong").getElementsByClassName("it").length>=9)?2:1,
+        "yaowen":(document.getElementById("yaowen").getElementsByClassName("it").length>=9)?2:1,
+        "china":(document.getElementById("china").getElementsByClassName("it").length>=9)?2:1
+    }
 
     var i, len,
         infoFlowAdParam = {};
@@ -3687,7 +3693,8 @@ function infoFlowAdSend() {
             maxTurn: infoFlowAdData[i][4],
             adTurnCookieName: 'home_infoflow_ad_turn',
             adTemplate: adTemplate.adInfoFlow,
-            adDomClassName: infoFlowAdData[i][3]
+            adDomClassName: infoFlowAdData[i][3],
+            root:infoFlowAdData[i][5]
         };
 
         renderCarAdAndSendStatis(infoFlowAdParam);
@@ -3941,7 +3948,8 @@ function renderCarAdAndSendStatis(opts) {
                 // 信息流广告
                 if (type === 3) { 
                     // var adInfoContainers = ["hudong","yaowen","china"]
-                    var adInfoContainer = document.getElementById(infoFlowObj[0].name);
+                    // var adInfoContainer = document.getElementById(infoFlowObj[0].name);
+                    var adInfoContainer = document.getElementById(opts.root);
                     // var adInfoContainer = adInfoContainers.shift();
                     var adInfoContainerSize = adInfoContainer.getElementsByClassName("it").length;
 
@@ -3953,17 +3961,18 @@ function renderCarAdAndSendStatis(opts) {
                             '<a href="javascript:;"  data-url='+adInfo.data.url+' class="h4">推广 |'+ adInfo.data.text;+'</a>'+
                         '</div>'
 
-                    adDom = infoFlowContainer;   
+                    adDom = infoFlowContainer;  
+
 
                     if(adInfoContainerSize>3&&adInfoContainerSize<10){
                         adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
-                        infoFlowObj.shift();
+                        // infoFlowObj.shift();
                     }else if(adInfoContainerSize>=10){
-                        if(infoFlowObj[0].time==2){
+                        if(infoFlowObj[opts.root]==2){
                             adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[3]);
-                        }else if(infoFlowObj[0].time == 1){
+                            infoFlowObj[opts.root] = 1;
+                        }else if(infoFlowObj[opts.root] == 1){
                             adInfoContainer.insertBefore(adDom,adInfoContainer.getElementsByClassName("it")[10]);
-                            infoFlowObj.shift(); 
                         }
 
                     }          
@@ -4001,7 +4010,7 @@ function renderCarAdAndSendStatis(opts) {
                         focusMapSwipe.appendChild(adDom);
                         MSOHUAD.focusMapAdIndex = focusMapItemsLen - 1;
                     } else if (focusMapItemsLen >= focusMapAdIndex - 1) {
-                        focusMapSwipe.insertBefore(adDom, focusMapItems[focusMapAdIndex]);
+                        focusMapSwipe.insertBefore(adDom, focusMapItems[focusMapAdIndex-1]);
                         MSOHUAD.focusMapAdIndex = focusMapAdIndex - 1;
                     }
                     if (focusMapPageWrapper.querySelectorAll('span').length !== 0) {
@@ -4861,7 +4870,7 @@ module.exports = Statistics;
         // 判断是正式环境还是测试环境
         var hostName = window.location.hostname;
         // var result =  window.location.href.indexOf('public') > 0;
-        result = true;
+        result = false;
         return result;
     };
 

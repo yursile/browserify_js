@@ -114,7 +114,7 @@
             };
 
         // 测试环境(且测试的广告位id存在)添加bucketid参数
-        if (isTestEnvironment && !!baseAdParam[2]) {
+        if (isTestEnvironment() && !!baseAdParam[2]) {
             baseUrl = testBaseAdQuestUrl;
             baseData.itemspaceid = baseAdParam[2];
             baseData.bucketid = 2;
