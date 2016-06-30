@@ -11,7 +11,7 @@ var CookieUtil = require("./CookieUtil"),
     // MSOHU = window.MSOHU || (window.MSOHU = {}),
     
     Statistics = require("./statics.js"),
-    Slide = require("./Slide.js"),
+    // Slide = require("./Slide.js"),
     ImageLazyLoader = require("./ImageLazyLoader"),
     Jsonp = require("./jsonp"),
     Utils = MSOHUAD.Utils,
@@ -59,31 +59,31 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
-(function() {
-    if (new ImageLazyLoader({
-        realSrcAttribute: "original"
-    }), !CookieUtil.get("supportwebp")) {
-        var a = new Date;
-        a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
-            _once_: "000186",
-            webp: 0
-        })
-    }
-})()
+// (function() {
+//     if (new ImageLazyLoader({
+//         realSrcAttribute: "original"
+//     }), !CookieUtil.get("supportwebp")) {
+//         var a = new Date;
+//         a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+//             _once_: "000186",
+//             webp: 0
+//         })
+//     }
+// })()
 
 
-var mySlide = new Slide({
-    targetSelector: ".topic-info",
-    prevSelector: ".topic-info .page-prev",
-    nextSelector: ".topic-info .page-next",
-    onSlide: function(a) {
-        // console.log(a)
-        0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
-            document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
-            for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
-        }
-    }
-});
+// var mySlide = new Slide({
+//     targetSelector: ".topic-info",
+//     prevSelector: ".topic-info .page-prev",
+//     nextSelector: ".topic-info .page-next",
+//     onSlide: function(a) {
+//         // console.log(a)
+//         0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
+//             document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
+//             for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
+//         }
+//     }
+// });
 
 var homeAdData = [
     [4, "14642", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
@@ -115,13 +115,13 @@ if (!isNoADMSohu) {
 
 function init() {
 
-    homeFocusMapAd();
-    infoFlowAdSend();
+    // homeFocusMapAd();
+    // infoFlowAdSend();
     // homeTopBannerAd();
     //homeBottomBannerAd();
 
     // 首页广告
-    MONEY.indexWin();
+    // MONEY.indexWin();
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
@@ -133,7 +133,7 @@ function init() {
     // MONEY.gif();
 
     // // h5广告
-    MONEY.implantH5();
+    // MONEY.implantH5();
 
     // // 新闻版块最后一条文字链广告
     // homeNewsTextAd();
@@ -155,7 +155,13 @@ function init() {
 
 
     //通栏广告
-    deliverySystemAd();
+    // deliverySystemAd();
+    // 
+    dataPageAd();
+    // erjiyeAd();
+
+    //loading
+    MONEY.loadingAd();
 
 }
 
@@ -376,6 +382,92 @@ function deliverySystemAd() {
 
         renderCarAdAndSendStatis(adParam);
     }
+}
+
+//
+function erjiyeAd() {
+    var i, len, adParam, template, className;
+    var homeAdData = window.homeAdData;
+    for ( i = 1; i < homeAdData.length; i++ ) {
+
+        if ( homeAdData[i][4] === '6400100' ) {
+            template = adTemplate.homeBannerImgAd;
+            className = adDomClassName.homeBannerImgAd;
+        }else{
+            template = adTemplate.homeBannerTextAd;
+            className = adDomClassName.homeBannerTextAd;
+        }
+
+        adParam = {
+            type: homeAdData[i][0],
+            formalApId: homeAdData[i][1],
+            testApId: homeAdData[i][2],
+            maxTurn: homeAdData[i][3],
+            adps: homeAdData[i][4],
+            adTurnCookieName: 'home_banner_ad_turn',
+            adTemplate: template,
+            adDomClassName: className
+        };
+
+        renderCarAdAndSendStatis(adParam);
+    }
+}
+
+//二级页通栏广告
+function dataPageAd() {
+    var i, len, adParam, template, className;
+    var adData = window.adData;
+    if(!window.adData) return;
+
+    if ( window.adData[4] === '6400100' ) {
+        template = adTemplate.homeBannerImgAd;
+        className = adDomClassName.homeBannerImgAd;
+    }else{
+        template = adTemplate.homeBannerTextAd;
+        className = adDomClassName.homeBannerTextAd;
+    }
+
+    adParam = {
+        type: adData[0],
+        formalApId: adData[1],
+        testApId: adData[2],
+        maxTurn: adData[3],
+        adps: adData[4],
+        adTurnCookieName: 'home_banner_ad_turn',
+        adTemplate: template,
+        adDomClassName: className
+    };
+
+    renderCarAdAndSendStatis(adParam);
+}
+
+
+
+
+function loadingAd() {
+    var i, len, adParam, template, className;
+    var adData = window.loadingAd;
+
+    if ( window.adData[4] === '6400100' ) {
+        template = adTemplate.homeBannerImgAd;
+        className = adDomClassName.homeBannerImgAd;
+    }else{
+        template = adTemplate.homeBannerTextAd;
+        className = adDomClassName.homeBannerTextAd;
+    }
+
+    adParam = {
+        type: adData[0],
+        formalApId: adData[1],
+        testApId: adData[2],
+        maxTurn: adData[3],
+        adps: adData[4],
+        adTurnCookieName: 'home_banner_ad_turn',
+        adTemplate: template,
+        adDomClassName: className
+    };
+
+    renderCarAdAndSendStatis(adParam);
 }
 
 function homeGraphicMixeAd() {

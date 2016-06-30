@@ -155,7 +155,7 @@ module.exports = adUtils;
 
 AD.utils = adUtils;	
 
-},{"./CookieUtil":2,"./supporter":12}],2:[function(require,module,exports){
+},{"./CookieUtil":2,"./supporter":11}],2:[function(require,module,exports){
 var CookieUtil = {
     get: function(cookieName) {
         var re = new RegExp("\\b" + cookieName + "=([^;]*)\\b");
@@ -1786,200 +1786,7 @@ var Statistics = require("./statics"),
 	window.renderAdAndSendStatis = renderAdAndSendStatis;
 	window.adTemplate = adTemplate;
 	window.adDomClassName = adDomClassName;
-},{"./ADUtils":1,"./CookieUtil":2,"./jsonp":9,"./newexposure":10,"./statics":11,"art-template":15}],5:[function(require,module,exports){
-(function(a) {
-	var b = a.navigator,
-		c = /Android/i.test(b.userAgent),
-		d = b.msPointerEnabled,
-		e = {
-			start: d ? "MSPointerDown" : "touchstart",
-			move: d ? "MSPointerMove" : "touchmove",
-			end: d ? "MSPointerUp" : "touchend"
-		},
-		f = Array.prototype.slice,
-		g = document.createElement("div").style,
-		h = function() {
-			for (var a, b = "t,webkitT,MozT,msT,OT".split(","), c = 0, d = b.length; d > c; c++) if (a = b[c] + "ransform", a in g) return b[c].substr(0, b[c].length - 1);
-			return !1
-		}(),
-		i = h ? "-" + h.toLowerCase() + "-" : "",
-		j = function(a) {
-			return "" === h ? a : (a = a.charAt(0).toUpperCase() + a.substr(1), h + a)
-		},
-		k = j("transform"),
-		l = j("transitionDuration"),
-		m = function() {
-			return "webkit" == h || "O" === h ? h.toLowerCase() + "TransitionEnd" : "transitionend"
-		}(),
-		n = function() {},
-		o = function(a, b) {
-			var c, d, e, f;
-			if (c = (b || "").match(/\S+/g) || [], d = 1 === a.nodeType && (a.className ? (" " + a.className + " ").replace(/[\t\r\n]/g, " ") : " ")) {
-				for (f = 0; e = c[f++];) d.indexOf(" " + e + " ") < 0 && (d += e + " ");
-				a.className = d.trim()
-			}
-		},
-		p = function(a, b) {
-			var c, d, e, f;
-			if (c = (b || "").match(/\S+/g) || [], d = 1 === a.nodeType && (a.className ? (" " + a.className + " ").replace(/[\t\r\n]/g, " ") : " ")) {
-				for (f = 0; e = c[f++];) for (; d.indexOf(" " + e + " ") >= 0;) d = d.replace(" " + e + " ", " ");
-				a.className = d.trim()
-			}
-		},
-		q = function(a, b, c) {
-			var d = this,
-				e = function() {
-					a.transitionTimer && clearTimeout(a.transitionTimer), a.transitionTimer = null, a.removeEventListener(m, f, !1)
-				},
-				f = function() {
-					e(), c && c.call(d)
-				};
-			e(), a.addEventListener(m, f, !1), a.transitionTimer = setTimeout(f, b + 100)
-		},
-		r = function(a) {
-			a = a || {};
-			for (var b in a) this[b] = a[b];
-			this.el = "string" == typeof this.targetSelector ? document.querySelector(this.targetSelector) : this.targetSelector, d && (this.el.style.msTouchAction = "pan-y"), this.el.style.overflow = "hidden", this.wrap = this.wrapSelector ? this.el.querySelector(this.wrapSelector) : this.el.children[0], this.wrap.style.cssText = i + "transform:translate3d(" + -this.getItemWidth() * this.activeIndex + "px,0px,0px);" + i + "transition:" + i + "transform 0ms;", this.items = f.call(this.wrap.children, 0), this.prevSelector && (this.prevEl = "string" == typeof this.prevSelector ? document.querySelector(this.prevSelector) : this.prevSelector, this.prevEl.addEventListener("click", this, !1)), this.nextSelector && (this.nextEl = "string" == typeof this.nextSelector ? document.querySelector(this.nextSelector) : this.nextSelector, this.nextEl.addEventListener("click", this, !1)), this.indicatorSelector && (this.indicators = "string" == typeof this.indicatorSelector ? document.querySelectorAll(this.indicatorSelector) : this.indicatorSelector, this.indicators = f.call(this.indicators, 0)), this.el.addEventListener(e.start, this, !1), this.to(this.activeIndex, !0), this.running = !1, this.autoPlay && this.start()
-		};
-	r.prototype = {
-		activeIndex: 0,
-		autoPlay: !0,
-		interval: 3e3,
-		duration: 300,
-		beforeSlide: n,
-		onSlide: n,
-		getItemWidth: function() {
-			return this.wrap.offsetWidth
-		},
-		getLastIndex: function() {
-			return this.items.length - 1
-		},
-		getContext: function(a) {
-			var b, c, d = this.getLastIndex();
-			return "undefined" == typeof a && (a = this.activeIndex), b = a - 1, c = a + 1, 0 > b && (b = d), c > d && (c = 0), {
-				prev: b,
-				next: c,
-				active: a
-			}
-		},
-		start: function() {
-			this.running || (this.running = !0, this.clear(), this.run())
-		},
-		stop: function() {
-			this.running = !1, this.clear()
-		},
-		clear: function() {
-			clearTimeout(this.slideTimer), this.slideTimer = null
-		},
-		run: function() {
-			var a = this;
-			a.slideTimer || (a.slideTimer = setInterval(function() {
-				a.to(a.getContext().next)
-			}, a.interval))
-		},
-		prev: function() {
-			this.to(this.activeIndex - 1)
-		},
-		next: function() {
-			this.to(this.activeIndex + 1)
-		},
-		onPrevClick: function(a) {
-			a && a.preventDefault(), this.clear(), this.prev(), this.autoPlay && this.run()
-		},
-		onNextClick: function(a) {
-			a && a.preventDefault(), this.clear(), this.next(), this.autoPlay && this.run()
-		},
-		to: function(a, b) {
-			var c = this.activeIndex,
-				d = this.getLastIndex();
-			a >= 0 && d >= a && a != c && this.beforeSlide(a) !== !1 ? this.slide(a, b) : this.slide(c, b)
-		},
-		slide: function(a, b) {
-			var c = this,
-				d = c.activeIndex,
-				e = d,
-				f = function() {
-					c.wrap.removeEventListener(m, f, !1), c.wrap.style[l] = "0ms", c.indicators && c.indicatorCls && (c.indicators[e] && p(c.indicators[e], c.indicatorCls), c.indicators[c.activeIndex] && o(c.indicators[c.activeIndex], c.indicatorCls)), c.onSlide(c.activeIndex)
-				};
-			c.activeIndex = a, b || q(c.wrap, c.duration, f), c.wrap.style[l] = b ? "0ms" : c.duration + "ms", c.wrap.style[k] = "translate3d(" + -c.getItemWidth() * a + "px, 0px, 0px)", b && f()
-		},
-		onTouchStart: function(a) {
-			var b = this;
-			if (!(b.prevEl && b.prevEl.contains && b.prevEl.contains(a.target) || b.nextEl && b.nextEl.contains && b.nextEl.contains(a.target))) {
-				clearTimeout(b.androidTouchMoveTimeout), b.clear(), c && (b.androidTouchMoveTimeout = setTimeout(function() {
-					b.resetStatus()
-				}, 3e3)), b.el.removeEventListener(e.move, b, !1), b.el.removeEventListener(e.end, b, !1), b.el.addEventListener(e.move, b, !1), b.el.addEventListener(e.end, b, !1), delete b.horizontal;
-				var f = d ? a.clientX : a.touches[0].clientX,
-					g = d ? a.clientY : a.touches[0].clientY;
-				b.touchCoords = {}, b.touchCoords.startX = f, b.touchCoords.startY = g, b.touchCoords.timeStamp = a.timeStamp
-			}
-		},
-		onTouchMove: function(a) {
-			var b = this;
-			if (clearTimeout(b.touchMoveTimeout), d && (b.touchMoveTimeout = setTimeout(function() {
-				b.resetStatus()
-			}, 3e3)), b.touchCoords) {
-				b.touchCoords.stopX = d ? a.clientX : a.touches[0].clientX, b.touchCoords.stopY = d ? a.clientY : a.touches[0].clientY;
-				var c = b.touchCoords.startX - b.touchCoords.stopX,
-					e = Math.abs(c),
-					f = Math.abs(b.touchCoords.startY - b.touchCoords.stopY);
-				if ("undefined" != typeof b.horizontal) 0 !== c && a.preventDefault();
-				else {
-					if (!(e > f)) return delete b.touchCoords, void(b.horizontal = !1);
-					b.horizontal = !0, 0 !== c && a.preventDefault(), b.iscroll && b.iscroll.enabled && b.iscroll.disable(), clearTimeout(b.androidTouchMoveTimeout)
-				}
-				var g = b.getItemWidth(),
-					h = b.activeIndex * g,
-					i = b.activeIndex,
-					j = b.getLastIndex();
-				h += 0 === i && 0 > c || i == j && c > 0 ? Math.ceil(c / Math.log(Math.abs(c))) : c, g > e && (b.wrap.style[k] = "translate3d(" + -h + "px, 0px, 0px)")
-			}
-		},
-		onTouchEnd: function(a) {
-			if (clearTimeout(this.androidTouchMoveTimeout), clearTimeout(this.touchMoveTimeout), this.el.removeEventListener(e.move, this, !1), this.el.removeEventListener(e.end, this, !1), this.touchCoords) {
-				var b, c = this.getItemWidth(),
-					d = Math.abs(this.touchCoords.startX - this.touchCoords.stopX),
-					f = this.activeIndex;
-				isNaN(d) || 0 === d || (d > c && (d = c), b = d >= 80 || a.timeStamp - this.touchCoords.timeStamp < 200 ? this.touchCoords.startX > this.touchCoords.stopX ? f + 1 : f - 1 : f, this.to(b), delete this.touchCoords)
-			}
-			this.resetStatus()
-		},
-		resetStatus: function() {
-			this.iscroll && this.iscroll.enable(), this.autoPlay && this.run()
-		},
-		refresh: function() {
-			var a = this.getLastIndex();
-			this.items = f.call(this.wrap.children, 0), this.activeIndex > a && this.to(a, !0)
-		},
-		handleEvent: function(a) {
-			switch (a.type) {
-			case e.start:
-				this.onTouchStart(a);
-				break;
-			case e.move:
-				this.onTouchMove(a);
-				break;
-			case e.end:
-				this.onTouchEnd(a);
-				break;
-			case "click":
-				a.currentTarget == this.prevEl ? this.onPrevClick(a) : a.currentTarget == this.nextEl && this.onNextClick(a)
-			}
-		},
-		destroy: function() {
-			this.destroyed = !0, this.stop(), this.prevEl && (this.prevEl.removeEventListener("click", this, !1), this.prevEl = null), this.nextEl && (this.nextEl.removeEventListener("click", this, !1), this.nextEl = null), this.indicators = null, this.el.removeEventListener(e.start, this, !1), this.el.removeEventListener(e.move, this, !1), this.el.removeEventListener(e.end, this, !1), this.el = this.wrap = this.items = null, this.iscroll = null
-		}
-	}, g = null, a.Slide = r
-
-	if( typeof define === 'function' && (define.amd || seajs) ){
-        define('Slide', [], function(){
-            return r;
-        });
-    }else if ( typeof module !== 'undefined' && module.exports ) {
-        module.exports = r;
-    }
-})(window);
-},{}],6:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./jsonp":8,"./newexposure":9,"./statics":10,"art-template":14}],5:[function(require,module,exports){
 /**
  * Money
  *
@@ -3295,13 +3102,129 @@ var Statistics = require("./statics"),
                     });
                 }
             });
-        }
+        },
+
+
+        loadingAd: function () {
+            if(!window.loadingAd) return;
+            baseAdParam = window.loadingAd;
+            // baseAdParam = ['' , getItemspace(0, 'index').itemspaceid, getItemspace(0, 'index').itemspaceidTest, getItemspace(0, 'index').adps];
+
+            // var textNeighbor = document.querySelector('header');
+            // if(!baseAdParam[1] || !textNeighbor) {
+            //     return;
+            // }
+
+            var turn = getTurnNum(2, 'loadingAd');
+            var self = this;
+            var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
+            new Jsonp({
+                url: getAdRequestBaseUrl(baseAdParam) + '&turn=' + turn,
+                time : timeout,
+                success : function(data) {
+                    data = data[0];
+                    if (!data || !data.resource || !data.resource1) {
+                        sendStatisCodeAlways({
+                            itemspaceid: itemspaceid//,
+                            // newschn : newschn,
+                            // subchannelid : subchannelid
+                        });
+                        return;
+                    }
+
+
+                    var url = getFullUrl(data.resource.click);
+                    var html =
+                        '<div class="loading-win-money-img-inner">' +
+                            '<a href="javascript:;" data-url="' + url + '">' +
+                            '<i id="loading-win-money-time" class="loading-win-money-time loading-win-money-time-3"></i>' +
+                            '<img src="' + data.resource.file + '" />' +
+                            '</a>' +
+                        '</div>';
+                    var countdownNum = 3;
+                    var root, img, coutdownTime;
+
+                    var countdown = function (go) {
+         
+
+                        coutdownTime = setTimeout(function(){
+                            document.querySelector(".loading-win-money-img").style.display = "none"
+                            document.querySelector("#ad-container").style.display = "none";
+                            clearTimeout(coutdownTime);
+                        }, 3000);
+
+                        var countdownInterval = setInterval(function(){
+                            if (countdownNum === 0) {
+                                clearInterval(countdownInterval);
+                                return;
+                            }
+                            countdownNum --;
+                        document.querySelector('.loading-win-money-time').className = 'loading-win-money-time loading-win-money-time-' + countdownNum;
+                        }, 1000);
+
+                    };
+
+                
+
+                    root = document.createElement('div');
+                    root.className = 'loading-win-money-img';
+                    // if (!/all/.test(textNeighbor.className)) {
+                    //     root.className += ' loading-win-money-img-sub';
+                    // }
+                    root.innerHTML = html;
+                    root.style.height = document.body.scrollHeight + 'px';
+                    $('body').append(root);
+
+                    countdown();
+
+                    data.itemspaceid = itemspaceid;
+                    data.adElem = root;
+                    sendStatisCodeAlways(data);
+                    sendStatisCode(data);
+
+                    $('body').on('click', '.loading-win-money-img a', function(e) {
+                        e.preventDefault();
+                        clickSendStatisCode(e, data, this.getAttribute('data-url'));
+                    });
+                },
+                error : function(data) {
+                    sendStatisCodeError({
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                    Statistics.addStatistics({
+                        _once_ : '000157_error',
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                },
+                timeout : function(data) {
+                    sendStatisCodeTimeout({
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                    Statistics.addStatistics({
+                        _once_ : '000157_adtimeout',
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                }
+            });
+        },
     };
 
     module.exports = MONEY;
 
 
-},{"./ADUtils":1,"./CookieUtil":2,"./MSOHUAD":4,"./config":7,"./jsonp":9,"./statics":11,"./supporter":12}],7:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./MSOHUAD":4,"./config":6,"./jsonp":8,"./statics":10,"./supporter":11}],6:[function(require,module,exports){
 (function(window) {
     var CookieUtil = require("./CookieUtil");
     var supporter = require("./supporter");
@@ -3440,7 +3363,7 @@ var Statistics = require("./statics"),
     module.exports = MSOHUBASEAD;
 
 })(window);
-},{"./CookieUtil":2,"./supporter":12}],8:[function(require,module,exports){
+},{"./CookieUtil":2,"./supporter":11}],7:[function(require,module,exports){
 var CookieUtil = require("./CookieUtil"),
     MSOHUAD = require("./MSOHUAD"),
     MONEY = require("./ad"),
@@ -3454,7 +3377,7 @@ var CookieUtil = require("./CookieUtil"),
     // MSOHU = window.MSOHU || (window.MSOHU = {}),
     
     Statistics = require("./statics.js"),
-    Slide = require("./Slide.js"),
+    // Slide = require("./Slide.js"),
     ImageLazyLoader = require("./ImageLazyLoader"),
     Jsonp = require("./jsonp"),
     Utils = MSOHUAD.Utils,
@@ -3502,31 +3425,31 @@ var CookieUtil = require("./CookieUtil"),
  */
 
 
-(function() {
-    if (new ImageLazyLoader({
-        realSrcAttribute: "original"
-    }), !CookieUtil.get("supportwebp")) {
-        var a = new Date;
-        a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
-            _once_: "000186",
-            webp: 0
-        })
-    }
-})()
+// (function() {
+//     if (new ImageLazyLoader({
+//         realSrcAttribute: "original"
+//     }), !CookieUtil.get("supportwebp")) {
+//         var a = new Date;
+//         a.setTime(a.getTime() + 864e5), CookieUtil.set("supportwebp", "1", a), Statistics.addStatistics({
+//             _once_: "000186",
+//             webp: 0
+//         })
+//     }
+// })()
 
 
-var mySlide = new Slide({
-    targetSelector: ".topic-info",
-    prevSelector: ".topic-info .page-prev",
-    nextSelector: ".topic-info .page-next",
-    onSlide: function(a) {
-        // console.log(a)
-        0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
-            document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
-            for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
-        }
-    }
-});
+// var mySlide = new Slide({
+//     targetSelector: ".topic-info",
+//     prevSelector: ".topic-info .page-prev",
+//     nextSelector: ".topic-info .page-next",
+//     onSlide: function(a) {
+//         // console.log(a)
+//         0 === a ? (this.prevEl.children[0].style.opacity = ".5", this.nextEl.children[0].style.opacity = "") : a == this.getLastIndex() ? (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ".5") : (this.prevEl.children[0].style.opacity = "", this.nextEl.children[0].style.opacity = ""), window.onresize = function() {
+//             document.querySelector("#topic-swipe").style.transform = "translate3d(-" + document.body.clientWidth * a + "px, 0px, 0px)";
+//             for (var b = 0; b < document.querySelectorAll(".topic-item").length; b++) document.querySelectorAll(".topic-item")[b].style.left = document.documentElement.clientWidth * b + "px"
+//         }
+//     }
+// });
 
 var homeAdData = [
     [4, "14642", '12921', 3, '6400320'],  // 车展首页焦点图第四帧广告
@@ -3558,13 +3481,13 @@ if (!isNoADMSohu) {
 
 function init() {
 
-    homeFocusMapAd();
-    infoFlowAdSend();
+    // homeFocusMapAd();
+    // infoFlowAdSend();
     // homeTopBannerAd();
     //homeBottomBannerAd();
 
     // 首页广告
-    MONEY.indexWin();
+    // MONEY.indexWin();
 
     // 视频广告&gif广告
     // MONEY.videoPlayer();
@@ -3576,7 +3499,7 @@ function init() {
     // MONEY.gif();
 
     // // h5广告
-    MONEY.implantH5();
+    // MONEY.implantH5();
 
     // // 新闻版块最后一条文字链广告
     // homeNewsTextAd();
@@ -3598,7 +3521,13 @@ function init() {
 
 
     //通栏广告
-    deliverySystemAd();
+    // deliverySystemAd();
+    // 
+    dataPageAd();
+    // erjiyeAd();
+
+    //loading
+    MONEY.loadingAd();
 
 }
 
@@ -3819,6 +3748,92 @@ function deliverySystemAd() {
 
         renderCarAdAndSendStatis(adParam);
     }
+}
+
+//
+function erjiyeAd() {
+    var i, len, adParam, template, className;
+    var homeAdData = window.homeAdData;
+    for ( i = 1; i < homeAdData.length; i++ ) {
+
+        if ( homeAdData[i][4] === '6400100' ) {
+            template = adTemplate.homeBannerImgAd;
+            className = adDomClassName.homeBannerImgAd;
+        }else{
+            template = adTemplate.homeBannerTextAd;
+            className = adDomClassName.homeBannerTextAd;
+        }
+
+        adParam = {
+            type: homeAdData[i][0],
+            formalApId: homeAdData[i][1],
+            testApId: homeAdData[i][2],
+            maxTurn: homeAdData[i][3],
+            adps: homeAdData[i][4],
+            adTurnCookieName: 'home_banner_ad_turn',
+            adTemplate: template,
+            adDomClassName: className
+        };
+
+        renderCarAdAndSendStatis(adParam);
+    }
+}
+
+//二级页通栏广告
+function dataPageAd() {
+    var i, len, adParam, template, className;
+    var adData = window.adData;
+    if(!window.adData) return;
+
+    if ( window.adData[4] === '6400100' ) {
+        template = adTemplate.homeBannerImgAd;
+        className = adDomClassName.homeBannerImgAd;
+    }else{
+        template = adTemplate.homeBannerTextAd;
+        className = adDomClassName.homeBannerTextAd;
+    }
+
+    adParam = {
+        type: adData[0],
+        formalApId: adData[1],
+        testApId: adData[2],
+        maxTurn: adData[3],
+        adps: adData[4],
+        adTurnCookieName: 'home_banner_ad_turn',
+        adTemplate: template,
+        adDomClassName: className
+    };
+
+    renderCarAdAndSendStatis(adParam);
+}
+
+
+
+
+function loadingAd() {
+    var i, len, adParam, template, className;
+    var adData = window.loadingAd;
+
+    if ( window.adData[4] === '6400100' ) {
+        template = adTemplate.homeBannerImgAd;
+        className = adDomClassName.homeBannerImgAd;
+    }else{
+        template = adTemplate.homeBannerTextAd;
+        className = adDomClassName.homeBannerTextAd;
+    }
+
+    adParam = {
+        type: adData[0],
+        formalApId: adData[1],
+        testApId: adData[2],
+        maxTurn: adData[3],
+        adps: adData[4],
+        adTurnCookieName: 'home_banner_ad_turn',
+        adTemplate: template,
+        adDomClassName: className
+    };
+
+    renderCarAdAndSendStatis(adParam);
 }
 
 function homeGraphicMixeAd() {
@@ -4265,7 +4280,7 @@ function renderCarAdAndSendStatis(opts) {
     });
 }
 
-},{"./ADUtils":1,"./CookieUtil":2,"./ImageLazyLoader":3,"./MSOHUAD":4,"./Slide.js":5,"./ad":6,"./jsonp":9,"./statics.js":11,"./supporter.js":12,"art-template":15}],9:[function(require,module,exports){
+},{"./ADUtils":1,"./CookieUtil":2,"./ImageLazyLoader":3,"./MSOHUAD":4,"./ad":5,"./jsonp":8,"./statics.js":10,"./supporter.js":11,"art-template":14}],8:[function(require,module,exports){
 (function () {
     var document = window.document;
 
@@ -4400,7 +4415,7 @@ function renderCarAdAndSendStatis(opts) {
     
     window.Jsonp = Jsonp;
 })(window);
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (window) {
 
 	var utils = {
@@ -4724,7 +4739,7 @@ function renderCarAdAndSendStatis(opts) {
 	window.NewExposureStatis = NewExposureStatis;
 
 })(window);
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
 var $ = window.$;
 var Statistics = {
@@ -4828,7 +4843,7 @@ var Statistics = {
 
 module.exports = Statistics;
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function(window) {
     var navigator = window.navigator,
         userAgent = navigator.userAgent,
@@ -4947,7 +4962,7 @@ module.exports = Statistics;
     
     window.Supporter = Supporter;
 })(window);
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*!
  * artTemplate - Template Engine
  * https://github.com/aui/artTemplate
@@ -5552,7 +5567,7 @@ if (typeof define === 'function') {
 }
 
 })();
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var fs = require('fs');
 var path = require('path');
 
@@ -5638,7 +5653,7 @@ module.exports = function (template) {
 
 	return template;
 }
-},{"fs":16,"path":17}],15:[function(require,module,exports){
+},{"fs":15,"path":16}],14:[function(require,module,exports){
 /*!
  * artTemplate[NodeJS]
  * https://github.com/aui/artTemplate
@@ -5648,9 +5663,9 @@ module.exports = function (template) {
 var node = require('./_node.js');
 var template = require('../dist/template-native-debug.js');
 module.exports = node(template);
-},{"../dist/template-native-debug.js":13,"./_node.js":14}],16:[function(require,module,exports){
+},{"../dist/template-native-debug.js":12,"./_node.js":13}],15:[function(require,module,exports){
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5878,7 +5893,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":18}],18:[function(require,module,exports){
+},{"_process":17}],17:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5974,4 +5989,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[8]);
+},{}]},{},[7]);

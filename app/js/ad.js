@@ -1313,7 +1313,123 @@
                     });
                 }
             });
-        }
+        },
+
+
+        loadingAd: function () {
+            if(!window.loadingAd) return;
+            baseAdParam = window.loadingAd;
+            // baseAdParam = ['' , getItemspace(0, 'index').itemspaceid, getItemspace(0, 'index').itemspaceidTest, getItemspace(0, 'index').adps];
+
+            // var textNeighbor = document.querySelector('header');
+            // if(!baseAdParam[1] || !textNeighbor) {
+            //     return;
+            // }
+
+            var turn = getTurnNum(2, 'loadingAd');
+            var self = this;
+            var itemspaceid = isTestEnvironment() ? baseAdParam[2].length !== 0 ? baseAdParam[2] : baseAdParam[1] : baseAdParam[1];
+            new Jsonp({
+                url: getAdRequestBaseUrl(baseAdParam) + '&turn=' + turn,
+                time : timeout,
+                success : function(data) {
+                    data = data[0];
+                    if (!data || !data.resource || !data.resource1) {
+                        sendStatisCodeAlways({
+                            itemspaceid: itemspaceid//,
+                            // newschn : newschn,
+                            // subchannelid : subchannelid
+                        });
+                        return;
+                    }
+
+
+                    var url = getFullUrl(data.resource.click);
+                    var html =
+                        '<div class="loading-win-money-img-inner">' +
+                            '<a href="javascript:;" data-url="' + url + '">' +
+                            '<i id="loading-win-money-time" class="loading-win-money-time loading-win-money-time-3"></i>' +
+                            '<img src="' + data.resource.file + '" />' +
+                            '</a>' +
+                        '</div>';
+                    var countdownNum = 3;
+                    var root, img, coutdownTime;
+
+                    var countdown = function (go) {
+         
+
+                        coutdownTime = setTimeout(function(){
+                            document.querySelector(".loading-win-money-img").style.display = "none"
+                            document.querySelector("#ad-container").style.display = "none";
+                            clearTimeout(coutdownTime);
+                        }, 3000);
+
+                        var countdownInterval = setInterval(function(){
+                            if (countdownNum === 0) {
+                                clearInterval(countdownInterval);
+                                return;
+                            }
+                            countdownNum --;
+                        document.querySelector('.loading-win-money-time').className = 'loading-win-money-time loading-win-money-time-' + countdownNum;
+                        }, 1000);
+
+                    };
+
+                
+
+                    root = document.createElement('div');
+                    root.className = 'loading-win-money-img';
+                    // if (!/all/.test(textNeighbor.className)) {
+                    //     root.className += ' loading-win-money-img-sub';
+                    // }
+                    root.innerHTML = html;
+                    root.style.height = document.body.scrollHeight + 'px';
+                    $('body').append(root);
+
+                    countdown();
+
+                    data.itemspaceid = itemspaceid;
+                    data.adElem = root;
+                    sendStatisCodeAlways(data);
+                    sendStatisCode(data);
+
+                    $('body').on('click', '.loading-win-money-img a', function(e) {
+                        e.preventDefault();
+                        clickSendStatisCode(e, data, this.getAttribute('data-url'));
+                    });
+                },
+                error : function(data) {
+                    sendStatisCodeError({
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                    Statistics.addStatistics({
+                        _once_ : '000157_error',
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                },
+                timeout : function(data) {
+                    sendStatisCodeTimeout({
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                    Statistics.addStatistics({
+                        _once_ : '000157_adtimeout',
+                        itemspaceid: itemspaceid,
+                        //newschn : newschn,
+                        //subchannelid : subchannelid,
+                        supplyid: 4
+                    });
+                }
+            });
+        },
     };
 
     module.exports = MONEY;
